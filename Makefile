@@ -5,9 +5,10 @@ SRC_DIR = src
 OBJ_DIR = obj
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
-CPPFLAGS += -std=c++14 -Wall -Iinclude -g
+CPPFLAGS += -std=c++17 -Wall -Iinclude -g -D_GLIBCXX_DEBUG
+# CPPFLAGS += -std=c++17 -Wall -Iinclude -O3 -Os
 LDFLAGS += -Llib
-LDLIBS += -lm
+LDLIBS += -lm -lSDL2
 CC = g++
 
 all: $(EXE)
@@ -16,7 +17,7 @@ run: $(EXE)
 	./$(EXE)
 
 valgrind: all
-	valgrind ./$(EXE)
+	valgrind --leak-check=full ./$(EXE)
 
 $(EXE): $(OBJ)
 	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@

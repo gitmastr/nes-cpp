@@ -1,12 +1,19 @@
+#include <memory>
 #include "console.hpp"
+#include "mapper.hpp"
+#include "cartridge.hpp"
 
-Console::Console(const string romName) : cartridge(romName), cpu(*this)
+const u64 CONSOLE_RAM_BYTES = 2048;
+
+namespace Console
 {
-    
-}
+    vector<u8> ram(CONSOLE_RAM_BYTES);
+    std::unique_ptr<Mapper> mapper;
 
-
-Console::~Console()
-{
-
+    bool init(const string& fileName)
+    {
+        Cartridge::init(fileName);
+        mapper = std::move(Mapper::generateMapper());
+        return true;
+    }
 }

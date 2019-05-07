@@ -1,17 +1,14 @@
 #pragma once
 
+#include <memory>
 #include "types.hpp"
-#include "cartridge.hpp"
-#include "cpu.hpp"
 
-class Console
+class Mapper;
+
+namespace Console
 {
-public:
-    Console(const string romName);
-    ~Console();
+    extern vector<u8> ram;
+    extern std::unique_ptr<Mapper> mapper;
 
-    string &getRom();
-private:
-    Cartridge cartridge;
-    CPU cpu;
-};
+    bool init(const string& fileName);
+}

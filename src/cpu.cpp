@@ -1,723 +1,879 @@
+#include <ios>
+#include <iomanip>
 #include "cpu.hpp"
 #include "console.hpp"
+#include "mapper.hpp"
 
-CPU::CPU(Console &console) :
-    cpuMemory(console)
+namespace CPUMemory
 {
-
-}
-
-CPU::~CPU()
-{
-
-}
-
-void CPU::setFlags(u8 flags)
-{
-    C = (flags >> 0) & 1;
-    Z = (flags >> 1) & 1;
-    I = (flags >> 2) & 1;
-    D = (flags >> 3) & 1;
-    B = (flags >> 4) & 1;
-    U = (flags >> 5) & 1;
-    V = (flags >> 6) & 1;
-    N = (flags >> 7) & 1;
-}
-
-u8 CPU::flags()
-{
-    return (C << 0
-          | Z << 1
-          | I << 2
-          | D << 3
-          | B << 4
-          | U << 5
-          | V << 6
-          | N << 7);
-}
-
-u8 CPU::read(u16 addr)
-{
-    return cpuMemory.read(addr);
-}
-
-void CPU::write(u16 addr, u8 value)
-{
-    cpuMemory.write(addr, value);
-}
-
-u16 CPU::read16(u16 addr)
-{
-    return (static_cast<u16>(read(addr + 1)) << 8) | read(addr);
-}
-
-u16 CPU::read16bug(u16 addr)
-{
-    u16 next = (addr & 0xFF00) | (((addr & 0xFF) + 1) & 0xFF);
-    return (static_cast<u16>(read(next)) << 8) | read(addr);
-}
-
-void CPU::setZ(u8 value)
-{
-    Z = (value == 0);
-}
-
-void CPU::setN(u8 value)
-{
-    N = (value & 0x80) != 0;
-}
-
-void CPU::setZN(u8 value)
-{
-    setZ(value);
-    setN(value);
-}
-
-void CPU::addBranchCycles()
-{
-    cycles += 1 + pagesDiffer(info.PC, info.addr);
-}
-
-u8 CPU::pagesDiffer(u16 a, u16 b)
-{
-    return (a >> 8) != (b >> 8);
-}
-
-void CPU::compare(u8 a, u8 b)
-{
-    setZN(a - b);
-    C = (a >= b);
-}
-
-void CPU::push(u8 value)
-{
-    write(0x100 | static_cast<u16>(SP), value);
-    SP--;
-}
-
-u8 CPU::pull()
-{
-    SP++;
-    return read(0x100 | static_cast<u16>(SP));
-}
-
-void CPU::push16(u16 value)
-{
-    u8 hi = value >> 8;
-    u8 lo = value & 0xFF;
-    push(hi);
-    push(lo);
-}
-
-
-u16 CPU::pull16()
-{
-    u16 lo = static_cast<u16>(pull());
-    u16 hi = static_cast<u16>(pull());
-    return lo | (hi << 8);
-}
-
-// It's all instructions below here
-
-/* Add w/ carry */
-void CPU::in_adc() 
-{ 
-    u16 p = A;
-    u16 q = read(info.addr);
-    u16 r = C;
-    A = p + q + r;
-    setZN(A);
-    C = (A + B + C > 0xFF);
-    V = ((((p ^ q) & 0x80) == 0) && (((p ^ A) & 0x80) != 0));
-}
-
-/* Logical and */
-void CPU::in_and() 
-{ 
-    A = A & read(info.addr);
-    setZN(A);
-}
-
-/* Arithmetic shift left */
-void CPU::in_asl() 
-{ 
-    if (info.mode == AddressingMode::Accumulator)
+    u8 read(u16 addr)
     {
-        C = (A >> 7) & 1;
-        A <<= 1;
-        setZN(A);
+        if      (addr  < 0x2000) return Console::ram[addr % 0x0800];
+        else if (addr  < 0x4000) return 0; /* PPU */
+        else if (addr == 0x4014) return 0; /* PPU */
+        else if (addr == 0x4015) return 0; /* APU */
+        else if (addr == 0x4016) return 0; /* Controller1 */
+        else if (addr == 0x4017) return 0; /* Controller2 */
+        else if (addr  < 0x6000) return 0; /* IO Registers? */
+        else if (addr >= 0x6000) return Console::mapper->read(addr);
+
+
+        throw "invalid read";
+        return 0;
     }
-    else
+
+    void write(u16 addr, u8 value)
     {
-        u8 value = read(info.addr);
-        C = (value >> 7) & 1;
-        value <<= 1;
-        write(info.addr, value);
-        setZN(value);
+        if      (addr  < 0x2000) Console::ram[addr % 0x0800] = value;
+        else if (addr  < 0x4000) return; /* PPU */
+        else if (addr  < 0x4014) return; /* APU */
+        else if (addr == 0x4014) return; /* PPU */
+        else if (addr == 0x4015) return; /* APU */
+        else if (addr == 0x4016) return; /* Controllers */
+        else if (addr  < 0x6000) return; /* IO or something */
+        else if (addr >= 0x6000) Console::mapper->write(addr, value);
     }
 }
 
-/* Branch if carry clear */
-void CPU::in_bcc() 
-{ 
-    if (C == 0)
-    {
-        PC = info.addr;
-        addBranchCycles();
-    }
-}
-
-/* Branch if carry set */
-void CPU::in_bcs() 
-{ 
-    if (C != 0)
-    {
-        PC = info.addr;
-        addBranchCycles();
-    }
-}
-
-/* Branch on result zero */
-void CPU::in_beq() 
-{ 
-    if (Z != 0)
-    {
-        PC = info.addr;
-        addBranchCycles();
-    }
-}
-
-
-void CPU::in_bit() 
-{ 
-    u8 value = read(info.addr);
-    V = (value >> 6) & 1;
-    setZ(value & A);
-    setN(value);
-}
-
-/* Branch if minus */
-void CPU::in_bmi() 
-{ 
-    if (N != 0)
-    {
-        PC = info.addr;
-        addBranchCycles();
-    }
-}
-
-/* Branch of result not zero */
-void CPU::in_bne() 
-{ 
-    if (Z == 0)
-    {
-        PC = info.addr;
-        addBranchCycles();
-    }
-}
-
-/* Branch if positive */
-void CPU::in_bpl() 
-{ 
-    if (N == 0)
-    {
-        PC = info.addr;
-        addBranchCycles();
-    }
-}
-
-/* Force interrupt */
-void CPU::in_brk() 
-{ 
-    push16(PC);
-    in_php();
-    in_sei();
-    PC = read16(0xFFFE);
-}
-
-/* Branch if overflow clear */
-void CPU::in_bvc() 
-{ 
-    if (V == 0)
-    {
-        PC = info.addr;
-        addBranchCycles();
-    }
-}
-
-/* Branch if overflow set */
-void CPU::in_bvs() 
-{ 
-    if (V != 0)
-    {
-        PC = info.addr;
-        addBranchCycles();
-    }
-}
-
-/* Clear cary flag */
-void CPU::in_clc() 
-{ 
-    C = 0;
-}
-
-/* Clear decimal mode */
-void CPU::in_cld() 
-{ 
-    D = 0;
-}
-
-/* Clear interrupt disable */
-void CPU::in_cli() 
-{ 
-    I = 0;
-}
-
-/* Clear overflow flag */
-void CPU::in_clv() 
-{ 
-    V = 0;
-}
-
-/* Compare */
-void CPU::in_cmp() 
-{ 
-    u8 value = read(info.addr);
-    compare(A, value);
-}
-
-/* Compare X register */
-void CPU::in_cpx() 
-{ 
-    u8 value = read(info.addr);
-    compare(X, value);
-}
-
-/* Compare Y register */
-void CPU::in_cpy() 
-{ 
-    u8 value = read(info.addr);
-    compare(Y, value);
-}
-
-/* Decrement memory */
-void CPU::in_dec() 
+namespace CPU
 {
-    u8 value = read(info.addr) - 1;
-    write(info.addr, value);
-    setZN(value);
-}
+    using CPUMemory::read;
+    using CPUMemory::write;
 
-/* Decrement X register */
-void CPU::in_dex() 
-{ 
-    X--;
-    setZN(X);
-}
+    u64 cycles = 0;
+    u16 PC = 0;
+    u8 SP = 0;
+    u8 A = 0;
+    u8 X = 0;
+    u8 Y = 0;
+    u8 C = 0;
+    u8 Z = 0;
+    u8 I = 0;
+    u8 D = 0;
+    u8 B = 0;
+    u8 U = 0;
+    u8 V = 0;
+    u8 N = 0;
+    InterruptType interrupt = InterruptType::None;
+    i32 stall = 0;
+    stepinfo_t info;
 
-/* Decrement Y register */
-void CPU::in_dey() 
-{ 
-    Y--;
-    setZN(Y);
-}
 
-/* XOR */
-void CPU::in_eor() 
-{ 
-    u8 value = read(info.addr);
-    A ^= value;
-    setZN(A);
-}
-
-/* Increment memory */
-void CPU::in_inc() 
-{ 
-    u8 value = read(info.addr) + 1;
-    write(info.addr, value);
-    setZN(value);
-}
-
-/* Increment X register */
-void CPU::in_inx() 
-{ 
-    X++;
-    setZN(X);
-}
-
-/* Increment Y register */
-void CPU::in_iny() 
-{ 
-    Y++;
-    setZN(Y);
-}
-
-/* Jump */
-void CPU::in_jmp() 
-{ 
-    PC = info.addr;
-}
-
-/* Jump to subroutine */
-void CPU::in_jsr() 
-{ 
-    push16(PC - 1);
-    PC = info.addr;
-}
-
-/* Load AddressingMode::accumulator */
-void CPU::in_lda() 
-{ 
-    A = read(info.addr);
-    setZN(A);
-}
-
-/* Load X register */
-void CPU::in_ldx() 
-{ 
-    X = read(info.addr);
-    setZN(X);
-}
-
-/* Load Y register */
-void CPU::in_ldy() 
-{ 
-    Y = read(info.addr);
-    setZN(Y);
-}
-
-/* Logical shift right */
-void CPU::in_lsr() 
-{ 
-    if (info.mode == AddressingMode::Accumulator)
+    void setPC(u16 pc)
     {
-        C = A & 1;
-        A >>= 1;
-        setZN(A);
-    }
-    else
-    {
-        u8 value = read(info.addr);
-        C = value & 1;
-        value >>= 1;
-        write(info.addr, value);
-        setZN(value);
-    }
-}
-
-/* No operation */
-void CPU::in_nop() 
-{ 
-    /* OwO */
-}
-
-/* Logical inclusive or */
-void CPU::in_ora() 
-{ 
-    A |= read(info.addr);
-    setZN(A);
-}
-
-/* Push AddressingMode::accumulator */
-void CPU::in_pha() 
-{ 
-    push(A);
-}
-
-/* Push processor status */
-void CPU::in_php() 
-{ 
-    push(flags() | 0x10);
-}
-
-/* Pull AddressingMode::accumulator */
-void CPU::in_pla() 
-{ 
-    A = pull();
-    setZN(A);
-}
-
-/* Pull processor flags */
-void CPU::in_plp() 
-{
-    setFlags((pull() & 0xEF) | 0x20);
-}
-
-void CPU::in_rol() 
-{ 
-    if (info.mode == AddressingMode::Accumulator)
-    {
-        u8 c = C;
-        C = (A >> 7) & 1;
-        A = (A << 1) | c;
-        setZN(A);
-    }
-    else
-    {
-        u8 c = C;
-        u8 value = read(info.addr);
-        C = (value >> 7) & 1;
-        value = (value << 1) | c;
-        write(info.addr, value);
-        setZN(value);
-    }
-}
-void CPU::in_ror() 
-{
-    if (info.mode == AddressingMode::Accumulator)
-    {
-        u8 c = C;
-        C = A & 1;
-        A = (A >> 1) | (c << 7);
-        setZN(A);
-    }
-    else
-    {
-        u8 c = C;
-        u8 value = read(info.addr);
-        C = value & 1;
-        value = (value >> 1) | (c << 7);
-        write(info.addr, value);
-        setZN(value);
+        PC = pc;
     }
 
-}
+    u32 step()
+    {
+        u64 oldCycles = cycles;
 
-/* Return from interrupt */
-void CPU::in_rti() 
-{ 
-    setFlags((pull() & 0xEF) | 0x20);
-    PC = pull16();
-}
+        if (stall >  0)
+        {
+            stall--;
+            return 1;
+        }
 
-/* Return from subroutine */
-void CPU::in_rts() 
-{
-    PC = pull16() + 1;
-}
+        switch (interrupt)
+        {
+            case InterruptType::None:
+                break;
+            case InterruptType::NMI:
+                nmi();
+                break;
+            case InterruptType::IRQ:
+                irq();
+                break;
+            default:
+                throw "unhandled interrupt";
+                break;
+        }
 
-/* Subtract with carry */
-void CPU::in_sbc() 
-{
-    u16 p = A;
-    u16 q = read(info.addr);
-    u16 r = C;
-    A = p - q - (1 - r);
-    setZN(A);
+        interrupt = InterruptType::None;
 
-    i16 iA = (i16) p;
-    i16 iB = (i16) q;
-    i16 iC = (i16) r;
+        u8 opcode = read(PC);
+        AddressingMode mode = addressingModes[opcode];
 
-    // if (iA - iB - (1 - iC) >= 0)
-    // {
-    //     this->C = 1;
-    // }
-    // else
-    // {
-    //     this->C = 0;
-    // }
+        u16 address = 0;
+        bool pageCrossed = false;
+        u16 offset = 0;
 
-    this->C = (iA - iB - (1 - iC) >= 0);
+        switch (mode)
+        {
+            case AddressingMode::Absolute:
+                address = read16(PC + 1);
+                break;
+            case AddressingMode::AbsoluteX:
+                address = read16(PC + 1) + X;
+                pageCrossed = pagesDiffer(address, address - X);
+                break;
+            case AddressingMode::AbsoluteY:
+                address = read16(PC + 1) + Y;
+                pageCrossed = pagesDiffer(address, address - Y);
+                break;
+            case AddressingMode::Accumulator:
+                address = 0;
+                break;
+            case AddressingMode::Immediate:
+                address = PC + 1;
+                break;
+            case AddressingMode::Implied:
+                address = 0;
+                break;
+            case AddressingMode::IndexedIndirect:
+                address = read16bug(static_cast<u8>(read(PC + 1) + X));
+                break;
+            case AddressingMode::Indirect:
+                address = read16bug(read16(PC + 1));
+                break;
+            case AddressingMode::IndirectIndexed:
+                address = read16bug(read(PC + 1)) + Y;
+                pageCrossed = pagesDiffer(address, address - Y);
+                break;
+            case AddressingMode::Relative:
+                offset = read(PC + 1);
+                address = (PC + 2 + offset) - ((offset >= 0x80) ? 0x100 : 0);
+                break;
+            case AddressingMode::ZeroPage:
+                address = read(PC + 1);
+                break;
+            case AddressingMode::ZeroPageX:
+                address = static_cast<u8>(read(PC + 1) + X);
+                break;
+            case AddressingMode::ZeroPageY:
+                address = static_cast<u8>(read(PC + 1) + Y);
+                break;
+        }
 
-    // if ((((A ^ B) & 0x80) != 0) && (((A ^ this->A) & 0x80) != 0))
-    // {
-    //     this->V = 1;
-    // }
-    // else
-    // {
-    //     this->V = 0;
-    // }
+        PC += instructionSizes[opcode];
+        cycles += instructionCycles[opcode];
 
-    V = ((((p ^ q) & 0x80) != 0) && (((p ^ A) & 0x80) != 0));
-}
+        if (pageCrossed) cycles += instructionPageCycles[opcode];
 
-/* Set carry flag */
-void CPU::in_sec() 
-{
-    C = 1;
-}
+        info.addr = address;
+        info.PC = PC;
+        info.mode = mode;
 
-/* Set decimal flag */
-void CPU::in_sed() 
-{
-    D = 1;
-}
+        opcodeList[opcode]();
 
-/* Set interrupt disable flag */
-void CPU::in_sei() 
-{ 
-    I = 1;
-}
+        return static_cast<u32>(cycles - oldCycles);
+    }
 
-/* Store AddressingMode::accumulator */
-void CPU::in_sta() 
-{
-    write(info.addr, A);
-}
+    void runAndLog(u32 number)
+    {
+        for (u32 i = 0; i < number; i++)
+        {
+            step();
+        }
 
-/* Store X register */
-void CPU::in_stx() 
-{ 
-    write(info.addr, X);
-}
+    }
 
-/* Store Y register */
-void CPU::in_sty() 
-{ 
-    write(info.addr, Y);
-}
+    void nmi()
+    {
+        push16(PC);
+        Instructions::php();
+        PC = read16(0xFFFA);
+        I = 1;
+        cycles += 7;
+    }
 
-/* Transfer A -> X */
-void CPU::in_tax() 
-{ 
-    X = A;
-    setZN(X);
-}
+    void irq()
+    {
+        push16(PC);
+        Instructions::php();
+        PC = read16(0xFFFE);
+        I = 1;
+        cycles += 7;
+    }
 
-/* Transfer A -> Y */
-void CPU::in_tay() 
-{ 
-    Y = A;
-    setZN(Y);
-}
+    void reset()
+    {
+        cycles = 0;
+        PC = 0;
+        SP = 0;
+        A = 0;
+        X = 0;
+        Y = 0;
+        interrupt = InterruptType::None;
+        stall = 0;
+        PC = read16(0xFFFC);
+        SP = 0xFD;
+        setFlags(0x24);
+    }
 
-/* Transfer stack pointer to X */
-void CPU::in_tsx() 
-{
-    X = SP;
-    setZN(X);
-}
+    void setFlags(u8 flags)
+    {
+        C = (flags >> 0) & 1;
+        Z = (flags >> 1) & 1;
+        I = (flags >> 2) & 1;
+        D = (flags >> 3) & 1;
+        B = (flags >> 4) & 1;
+        U = (flags >> 5) & 1;
+        V = (flags >> 6) & 1;
+        N = (flags >> 7) & 1;
+    }
 
-/* Transfer X to AddressingMode::accumulator */
-void CPU::in_txa() 
-{
-    A = X;
-    setZN(A);
-}
+    u8 flags()
+    {
+        return (C << 0
+              | Z << 1
+              | I << 2
+              | D << 3
+              | B << 4
+              | U << 5
+              | V << 6
+              | N << 7);
+    }
 
-/* Transfer X to stack pointer */
-void CPU::in_txs() 
-{
-    SP = X;
-}
+    u16 read16(u16 addr)
+    {
+        return (read(addr + 1) << 8) | read(addr);
+    }
 
-/* Transfer Y to AddressingMode::accumulator */
-void CPU::in_tya() 
-{ 
-    A = Y;
-    setZN(A);
-}
+    u16 read16bug(u16 addr)
+    {
+        return (read((addr & 0xFF00) | (((addr & 0xFF) + 1) & 0xFF)) << 8) | read(addr);
+    }
 
-/* Illegal opcodes below */
+    void setZ(u8 value)
+    {
+        Z = (value == 0);
+    }
 
-void CPU::in_ahx() 
-{ 
-    throw "Unimplemented illegal opcode reached";
-}
+    void setN(u8 value)
+    {
+        N = (value & 0x80) != 0;
+    }
 
-void CPU::in_alr() 
-{ 
-    throw "Unimplemented illegal opcode reached";
-}
+    void setZN(u8 value)
+    {
+        setZ(value);
+        setN(value);
+    }
 
-void CPU::in_anc() 
-{ 
-    throw "Unimplemented illegal opcode reached";
-}
+    void addBranchCycles()
+    {
+        cycles += 1 + pagesDiffer(info.PC, info.addr);
+    }
 
-void CPU::in_arr() 
-{ 
-    throw "Unimplemented illegal opcode reached";
-}
+    bool pagesDiffer(u16 a, u16 b)
+    {
+        return (a >> 8) != (b >> 8);
+    }
 
-void CPU::in_axs() 
-{ 
-    throw "Unimplemented illegal opcode reached";
-}
+    void compare(u8 a, u8 b)
+    {
+        setZN(a - b);
+        C = (a >= b);
+    }
 
-/* Equivalent to DEC value and then CMP value (ILLEGAL) */
-void CPU::in_dcp() 
-{ 
-    in_dec();
-    in_cmp();
-}
+    void push(u8 value)
+    {
+        write(0x100 | SP, value);
+        SP--;
+    }
 
-/* Equivalent to INC value and then SBC value (ILLEGAL) */
-void CPU::in_isc() 
-{ 
-    in_inc();
-    in_sbc();
-}
+    u8 pull()
+    {
+        SP++;
+        return read(0x100 | SP);
+    }
 
-void CPU::in_kil() 
-{ 
-    throw "Unimplemented illegal opcode reached";
-}
+    void push16(u16 value)
+    {
+        u8 hi = value >> 8;
+        u8 lo = value & 0xFF;
+        push(hi);
+        push(lo);
+    }
 
-void CPU::in_las() 
-{ 
-    throw "Unimplemented illegal opcode reached";
-}
 
-/* Load memory location into both A and X (ILLEGAL) */
-void CPU::in_lax() 
-{ 
-    A = read(info.addr);
-    X = A;
-    setZN(A);
-}
+    u16 pull16()
+    {
+        u8 lo = pull();
+        u8 hi = pull();
+        return lo | (hi << 8);
+    }
 
-/* Equivalent to ROL and then AND  (ILLEGAL) */
-void CPU::in_rla() 
-{ 
-    in_rol();
-    in_and();
-}
+    namespace Instructions
+    {
+        /* Add w/ carry */
+        void adc() 
+        { 
+            u8 a = A;
+            u8 r = read(info.addr);
+            A = a + r + C;
+            setZN(A);
+            C = (a + r + C > 0xFF);
+            V = ((((a ^ r) & 0x80) == 0) && (((a ^ A) & 0x80) != 0));
+        }
 
-/* Equivalent to ROR and then ADC (ILLEGAL) */
-void CPU::in_rra() 
-{ 
-    in_ror();
-    in_adc();
-}
+        /* Logical and */
+        void anx() 
+        { 
+            A = A & read(info.addr);
+            setZN(A);
+        }
 
-/* Store result of bitwise and of A and X at address (ILLEGAL) */
-void CPU::in_sax() 
-{ 
-    write(info.addr, A & X);
-}
+        /* Arithmetic shift left */
+        void asl() 
+        { 
+            if (info.mode == AddressingMode::Accumulator)
+            {
+                C = (A >> 7) & 1;
+                A <<= 1;
+                setZN(A);
+            }
+            else
+            {
+                u8 value = read(info.addr);
+                C = (value >> 7) & 1;
+                value <<= 1;
+                write(info.addr, value);
+                setZN(value);
+            }
+        }
 
-void CPU::in_shx() 
-{ 
-    throw "Unimplemented illegal opcode reached";
-}
+        /* Branch if carry clear */
+        void bcc() 
+        { 
+            if (C == 0)
+            {
+                PC = info.addr;
+                addBranchCycles();
+            }
+        }
 
-void CPU::in_shy() 
-{ 
-    throw "Unimplemented illegal opcode reached";
-}
+        /* Branch if carry set */
+        void bcs() 
+        { 
+            if (C != 0)
+            {
+                PC = info.addr;
+                addBranchCycles();
+            }
+        }
 
-/* Equivalent to ASL value then ORA value (ILLEGAL) */
-void CPU::in_slo() 
-{ 
-    in_asl();
-    in_ora();
-}
+        /* Branch on result zero */
+        void beq() 
+        { 
+            if (Z != 0)
+            {
+                PC = info.addr;
+                addBranchCycles();
+            }
+        }
 
-/* Equivalent to LSR and then EOR value (ILLEGAL) */
-void CPU::in_sre() 
-{ 
-    in_lsr();
-    in_eor();
-}
 
-void CPU::in_tas() 
-{ 
-    throw "Unimplemented illegal opcode reached";
-}
+        void bit() 
+        { 
+            u8 value = read(info.addr);
+            V = (value >> 6) & 1;
+            setZ(value & A);
+            setN(value);
+        }
 
-void CPU::in_xaa() 
-{ 
-    throw "Unimplemented illegal opcode reached";
+        /* Branch if minus */
+        void bmi() 
+        { 
+            if (N != 0)
+            {
+                PC = info.addr;
+                addBranchCycles();
+            }
+        }
+
+        /* Branch of result not zero */
+        void bne() 
+        { 
+            if (Z == 0)
+            {
+                PC = info.addr;
+                addBranchCycles();
+            }
+        }
+
+        /* Branch if positive */
+        void bpl() 
+        { 
+            if (N == 0)
+            {
+                PC = info.addr;
+                addBranchCycles();
+            }
+        }
+
+        /* Force interrupt */
+        void brk() 
+        { 
+            push16(PC);
+            php();
+            sei();
+            PC = read16(0xFFFE);
+        }
+
+        /* Branch if overflow clear */
+        void bvc() 
+        { 
+            if (V == 0)
+            {
+                PC = info.addr;
+                addBranchCycles();
+            }
+        }
+
+        /* Branch if overflow set */
+        void bvs() 
+        { 
+            if (V != 0)
+            {
+                PC = info.addr;
+                addBranchCycles();
+            }
+        }
+
+        /* Clear cary flag */
+        void clc() 
+        { 
+            C = 0;
+        }
+
+        /* Clear decimal mode */
+        void cld() 
+        { 
+            D = 0;
+        }
+
+        /* Clear interrupt disable */
+        void cli() 
+        { 
+            I = 0;
+        }
+
+        /* Clear overflow flag */
+        void clv() 
+        { 
+            V = 0;
+        }
+
+        /* Compare */
+        void cmp() 
+        { 
+            u8 value = read(info.addr);
+            compare(A, value);
+        }
+
+        /* Compare X register */
+        void cpx() 
+        { 
+            u8 value = read(info.addr);
+            compare(X, value);
+        }
+
+        /* Compare Y register */
+        void cpy() 
+        { 
+            u8 value = read(info.addr);
+            compare(Y, value);
+        }
+
+        /* Decrement memory */
+        void dec() 
+        {
+            u8 value = read(info.addr) - 1;
+            write(info.addr, value);
+            setZN(value);
+        }
+
+        /* Decrement X register */
+        void dex() 
+        { 
+            X--;
+            setZN(X);
+        }
+
+        /* Decrement Y register */
+        void dey() 
+        { 
+            Y--;
+            setZN(Y);
+        }
+
+        /* XOR */
+        void eor() 
+        { 
+            u8 value = read(info.addr);
+            A ^= value;
+            setZN(A);
+        }
+
+        /* Increment memory */
+        void inc() 
+        { 
+            u8 value = read(info.addr) + 1;
+            write(info.addr, value);
+            setZN(value);
+        }
+
+        /* Increment X register */
+        void inx() 
+        { 
+            X++;
+            setZN(X);
+        }
+
+        /* Increment Y register */
+        void iny() 
+        { 
+            Y++;
+            setZN(Y);
+        }
+
+        /* Jump */
+        void jmp() 
+        { 
+            PC = info.addr;
+        }
+
+        /* Jump to subroutine */
+        void jsr() 
+        { 
+            push16(PC - 1);
+            PC = info.addr;
+        }
+
+        /* Load AddressingMode::accumulator */
+        void lda() 
+        { 
+            A = read(info.addr);
+            setZN(A);
+        }
+
+        /* Load X register */
+        void ldx() 
+        { 
+            X = read(info.addr);
+            setZN(X);
+        }
+
+        /* Load Y register */
+        void ldy() 
+        { 
+            Y = read(info.addr);
+            setZN(Y);
+        }
+
+        /* Logical shift right */
+        void lsr() 
+        { 
+            if (info.mode == AddressingMode::Accumulator)
+            {
+                C = A & 1;
+                A >>= 1;
+                setZN(A);
+            }
+            else
+            {
+                u8 value = read(info.addr);
+                C = value & 1;
+                value >>= 1;
+                write(info.addr, value);
+                setZN(value);
+            }
+        }
+
+        /* No operation */
+        void nop() 
+        { 
+            /* OwO */
+        }
+
+        /* Logical inclusive or */
+        void ora() 
+        { 
+            A |= read(info.addr);
+            setZN(A);
+        }
+
+        /* Push AddressingMode::accumulator */
+        void pha() 
+        { 
+            push(A);
+        }
+
+        /* Push processor status */
+        void php() 
+        { 
+            push(flags() | 0x10);
+        }
+
+        /* Pull AddressingMode::accumulator */
+        void pla() 
+        { 
+            A = pull();
+            setZN(A);
+        }
+
+        /* Pull processor flags */
+        void plp() 
+        {
+            setFlags((pull() & 0xEF) | 0x20);
+        }
+
+        void rol() 
+        { 
+            if (info.mode == AddressingMode::Accumulator)
+            {
+                u8 c = C;
+                C = (A >> 7) & 1;
+                A = (A << 1) | c;
+                setZN(A);
+            }
+            else
+            {
+                u8 c = C;
+                u8 value = read(info.addr);
+                C = (value >> 7) & 1;
+                value = (value << 1) | c;
+                write(info.addr, value);
+                setZN(value);
+            }
+        }
+        void ror() 
+        {
+            if (info.mode == AddressingMode::Accumulator)
+            {
+                u8 c = C;
+                C = A & 1;
+                A = (A >> 1) | (c << 7);
+                setZN(A);
+            }
+            else
+            {
+                u8 c = C;
+                u8 value = read(info.addr);
+                C = value & 1;
+                value = (value >> 1) | (c << 7);
+                write(info.addr, value);
+                setZN(value);
+            }
+
+        }
+
+        /* Return from interrupt */
+        void rti() 
+        { 
+            setFlags((pull() & 0xEF) | 0x20);
+            PC = pull16();
+        }
+
+        /* Return from subroutine */
+        void rts() 
+        {
+            PC = pull16() + 1;
+        }
+
+        /* Subtract with carry */
+        void sbc() 
+        {
+            u8 p = A;
+            u8 q = read(info.addr);
+            u8 r = C;
+            i16 tmp = p - q - (1 - r);
+            A = tmp;
+            C = tmp >= 0;
+            V = ((p ^ q) & 0x80) && ((p ^ A) & 0x80);
+            setZN(A);
+        }
+
+        /* Set carry flag */
+        void sec() 
+        {
+            C = 1;
+        }
+
+        /* Set decimal flag */
+        void sed() 
+        {
+            D = 1;
+        }
+
+        /* Set interrupt disable flag */
+        void sei() 
+        { 
+            I = 1;
+        }
+
+        /* Store AddressingMode::accumulator */
+        void sta() 
+        {
+            write(info.addr, A);
+        }
+
+        /* Store X register */
+        void stx() 
+        { 
+            write(info.addr, X);
+        }
+
+        /* Store Y register */
+        void sty() 
+        { 
+            write(info.addr, Y);
+        }
+
+        /* Transfer A -> X */
+        void tax() 
+        { 
+            X = A;
+            setZN(X);
+        }
+
+        /* Transfer A -> Y */
+        void tay() 
+        { 
+            Y = A;
+            setZN(Y);
+        }
+
+        /* Transfer stack pointer to X */
+        void tsx() 
+        {
+            X = SP;
+            setZN(X);
+        }
+
+        /* Transfer X to AddressingMode::accumulator */
+        void txa() 
+        {
+            A = X;
+            setZN(A);
+        }
+
+        /* Transfer X to stack pointer */
+        void txs() 
+        {
+            SP = X;
+        }
+
+        /* Transfer Y to AddressingMode::accumulator */
+        void tya() 
+        { 
+            A = Y;
+            setZN(A);
+        }
+
+        /* Illegal opcodes below */
+
+        void ahx() 
+        { 
+            throw "Unimplemented illegal opcode reached";
+        }
+
+        void alr() 
+        { 
+            throw "Unimplemented illegal opcode reached";
+        }
+
+        void anc() 
+        { 
+            throw "Unimplemented illegal opcode reached";
+        }
+
+        void arr() 
+        { 
+            throw "Unimplemented illegal opcode reached";
+        }
+
+        void axs() 
+        { 
+            throw "Unimplemented illegal opcode reached";
+        }
+
+        /* Equivalent to DEC value and then CMP value (ILLEGAL) */
+        void dcp() 
+        { 
+            dec();
+            cmp();
+        }
+
+        /* Equivalent to INC value and then SBC value (ILLEGAL) */
+        void isc() 
+        { 
+            inc();
+            sbc();
+        }
+
+        void kil() 
+        { 
+            throw "Unimplemented illegal opcode reached";
+        }
+
+        void las() 
+        { 
+            throw "Unimplemented illegal opcode reached";
+        }
+
+        /* Load memory location into both A and X (ILLEGAL) */
+        void lax() 
+        { 
+            A = read(info.addr);
+            X = A;
+            setZN(A);
+        }
+
+        /* Equivalent to ROL and then AND  (ILLEGAL) */
+        void rla() 
+        { 
+            rol();
+            anx();
+        }
+
+        /* Equivalent to ROR and then ADC (ILLEGAL) */
+        void rra() 
+        { 
+            ror();
+            adc();
+        }
+
+        /* Store result of bitwise and of A and X at address (ILLEGAL) */
+        void sax() 
+        { 
+            write(info.addr, A & X);
+        }
+
+        void shx() 
+        { 
+            throw "Unimplemented illegal opcode reached";
+        }
+
+        void shy() 
+        { 
+            throw "Unimplemented illegal opcode reached";
+        }
+
+        /* Equivalent to ASL value then ORA value (ILLEGAL) */
+        void slo() 
+        { 
+            asl();
+            ora();
+        }
+
+        /* Equivalent to LSR and then EOR value (ILLEGAL) */
+        void sre() 
+        { 
+            lsr();
+            eor();
+        }
+
+        void tas() 
+        { 
+            throw "Unimplemented illegal opcode reached";
+        }
+
+        void xaa() 
+        { 
+            throw "Unimplemented illegal opcode reached";
+        }
+    }
 }

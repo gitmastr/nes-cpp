@@ -1,0 +1,8 @@
+00000.0000 - Starting
+00000.0029 - Initialized cartridge from roms/nestest.nes
+00000.0029 - Initialized logger base class
+00000.0030 - Initialized mapper 2
+00000.0030 - Initialized CPUMemory
+00000.0030 - Initialized CPU
+00000.0030 - Initialized console
+00000.0676 - Initialized image of size 256 x 240
