@@ -1,346 +1,95 @@
-#include "types.hpp"
 #include "ppu.hpp"
-#include "image.hpp"
-#include "cartridge.hpp"
-#include "mapper.hpp"
-#include "console.hpp"
-#include "display.hpp"
-#include "cpu.hpp"
-#include <cassert> 
-#include <algorithm>
 
-namespace PPUMemory
+const u32 SCREEN_WIDTH = 256;
+const u32 SCREEN_HEIGHT = 240;
+const double SCREEN_REFRESH_RATE = 60.0988;
+const u32 NUM_DOTS = 341;
+const u32 NUM_SCANLINESS = 262;
+const u32 OAM_SIZE = 256;
+const u32 SEC_OAM_SIZE = 32;
+const u32 PALETTE_SIZE = 32;
+const u32 TILE_WIDTH = 8;
+const u32 TILE_HEIGHT = 8;
+const u32 PATTERN_TABLE_0_START = 0x0000;
+const u32 PATTERN_TABLE_1_START = 0x1000;
+const u32 NAME_TABLE_START = 0x2000;
+const u32 ATTRIBUTE_TABLE_START = 0x23C0;
+const u32 BG_PALETTE_START = 0x3F00;
+const u32 SPRITE_PALETTE_START = 0x3F10;
+const u32 TILE_SIZE = 16;
+const u32 NUM_PALETTE_ENTRIES = 4;
+const u32 NUM_CHROMA_VALUES = 16;
+const u32 NUM_LUMA_VALUES = 4;
+const u32 NUM_SPRITES = 64;
+const u32 NUM_SPRITES_PER_LINE = 8;
+
+
+namespace PPU 
 {
-    u8 read(u16 addr)
+    namespace CTRL
     {
-        addr = addr % 0x4000;
-
-        if      (addr < 0x2000) return Console::mapper->read(addr);
-        else if (addr < 0x3F00)
-        {
-            auto mode = Cartridge::mirror;
-            (void) mode; // TODO: add other mirror modes
-            return PPU::nametableData[PPU::nametable_mirror(addr) % 2048];
-        }
-        else if (addr < 0x4000) return PPU::read_palette(addr % 32);
-
-        return 0;
+        u8 NN; // base nametable address 
+                 // (0 = $2000; 1 = $2400; 2 = $2800; 3 = $2C00)
+                 // Equivalently, sets bits in scroll
+                 // 7  bit  0
+                 // ---- ----
+                 // .... ..YX
+                 //        ||
+                 //        |+- 1: Add 256 to the X scroll position
+                 //        +-- 1: Add 240 to the Y scroll position
+        
+        bool I; //  (0: add 1, going across; 1: add 32, going down)
+        bool S; // sprite pattern table address for 8x8
+                // (0: $0000; 1: $1000; ignored in 8x16 mode)
+        bool B; // background pattern table address(0: $0000; 1: $1000)
+        bool H; // sprite size (0: 8x8 pixels; 1: 8x16 pixels)
+        bool P; // master/slave mode (0: read backdrop from EXT pins; 1: output color on EXT pins)
+        bool V; // generate an NMI on the next vblack
     }
 
-    void write(u16 addr, u8 value)
+    namespace MASK
     {
-        addr = addr % 0x4000;
-
-        if      (addr < 0x2000) Console::mapper->write(addr, value);
-        else if (addr < 0x3F00)
-        {
-            auto mode = Cartridge::mirror;
-            (void) mode;
-            u16 nametableDataAddr = PPU::nametable_mirror(addr); // TODO: add other mirror modes
-            PPU::nametableData[nametableDataAddr % 2048] = value;
-        }
-        else if (addr < 0x4000)
-        {
-            PPU::write_palette(addr % 32, value);
-        }
-    }
-}
-
-namespace PPU
-{
-    using PPUMemory::read;
-    using PPUMemory::write;
-
-    u32 cycle = 0;
-    u32 scanline = 0;
-    u64 frame = 0;
-    vector<u8> paletteData(32);
-    vector<u8> nametableData(2048);
-    vector<u8> oamData(256);
-    Image front(256, 240);
-    Image back(256, 240);
-    u16 v = 0;
-    u16 t = 0;
-    u8 x = 0;
-    bool latch = 0;
-    u8 f = 0;
-    u8 regis = 0;
-    bool nmiOccurred = false;
-    bool nmiOutput = true;
-    bool nmiPrevious = false;
-    u8 nmiDelay = 0;
-    u8 nametableByte = 0;
-    u8 attributeTableByte = 0;
-    u8 lowTileByte = 0;
-    u64 tileData = 0;
-
-    u32 spriteCount = 0;
-    vector<u32> spritePatterns(8);
-    vector<u8> spritePositions(8);
-    vector<u8> spritePriorities(8);
-    vector<u8> spriteIndices(8);
-
-    u8 flagNametable = 0;
-    u8 flagIncrement = 0;
-    u8 flagSpriteTable = 0;
-    u8 flagBackgroundTable = 0;
-    u8 flagSpriteSize = 0;
-    u8 flagMasterSlave = 0;
-
-    u8 flagGrayscale = 0;
-    u8 flagShowLeftBackground = 0;
-    u8 flagShowLeftSprites = 0;
-    u8 flagShowBackground = 0;
-    u8 flagShowSprites = 0;
-    u8 flagRedTint = 0;
-    u8 flagGreenTint = 0;
-    u8 flagBlueTint = 0;
-
-    u8 flagSpriteZeroHit = 0;
-    u8 flagSpriteOverflow = 0;
-    u8 oamAddress = 0;
-    u8 bufferedData = 0;
-
-    void init()
-    {
-        cycle = 340;
-        scanline = 240;
-        frame = 0;
-        write_control(0);
-        write_mask(0);
-        write_oam_address(0);
+        bool G; // grayscale
+        bool m; // background show left column 
+                // 1: Show background in leftmost 8 pixels of screen, 0: Hide
+        bool M; // sprite show left column
+                // 1: Show sprites in leftmost 8 pixels of screen, 0: Hide
+        bool b; // show backgrounds
+        bool s; // show sprites
+        bool emph_R; // emphasize red
+        bool emph_G; // emphasize green
+        bool emph_B; // emphasize blue
     }
 
-    void write_register(u16 addr, u8 value)
+    namespace STATUS
     {
-        assert(addr >= 0x2000);
-        u16 diff = addr - 0x2000;
-        addr = 0x2000 + (diff % 8);
-
-        switch (addr)
-        {
-            case 0x2000: write_control(value); break;    // PPUCTRL
-            case 0x2001: write_mask(value); break;       // PPUMASK
-            case 0x2002: break;                         // PPUSTATUS
-            case 0x2003: write_oam_address(value); break; // OAMADDR
-            case 0x2004: write_oam_data(value); break;    // OAMDATA
-            case 0x2005: write_scroll(value); break      // 
-        }
+        u8 reserved;
+        bool O; // sprite overflow. The intent was for this flag to be set
+                // whenever more than eight sprites appear on a scanline, but a
+                // hardware bug causes the actual behavior to be more complicated
+                // and generate false positives as well as false negatives; see
+                // PPU sprite evaluation. This flag is set during sprite
+                // evaluation and cleared at dot 1 (the second dot) of the
+                // pre-render line.
+        bool S; // Sprite 0 hit. Set when a nonzero pixel of sprite
+                // 0 overlaps a nonzero background pixel. Cleared at dot
+                // 1 of the prender line.
+        bool V; // Vertical blank has started.
+                // Set at dot 1 of line 241 (the line *after* the post-render
+                // line); cleared after reading $2002 and at dot 1 of the
+                // pre-render line.
     }
 
-    // PPUCTRL
-    void write_control(u8 value)
+    namespace VRAM
     {
-        flagNametable = (value >> 0) & 3;
-        flagIncrement = (value >> 2) & 1;
-        flagSpriteTable = (value >> 3) & 1;
-        flagBackgroundTable = (value >> 4) & 1;
-        flagSpriteSize = (value >> 5) & 1;
-        flagMasterSlave = (value >> 6) & 1;
-        nmiOutput = (value >> 7) & 1;
-        nmi_change();
-        // t: ....BA.. ........ = d: ......BA
-        t = (t & 0xF3FF) | ((value & 3) << 10);
+        u16 vram_address;
+        u8 coarse_x_scroll() { return vram_address & 0b11111; }
+        u8 coarse_y_scroll() { return (vram_address >> 5) & 0b11111; }
+        bool h_nametable() { return (vram_address >> 10) & 1; }
+        bool v_nametable() { return (vram_address >> 11) & 1; }
+        u8 fine_y_scroll() { return (vram_address >> 12) & 0b111; }
     }
 
-    // PPUMASK
-    void write_mask(u8 value)
-    {
-        flagGrayscale = (value >> 0) & 1;
-        flagShowLeftBackground = (value >> 1) & 1;
-        flagShowLeftSprites = (value >> 2) & 1;
-        flagShowBackground = (value >> 3) & 1;
-        flagShowSprites = (value >> 4) & 1;
-        flagRedTint = (value >> 5) & 1;
-        flagGreenTint = (value >> 6) & 1;
-        flagBlueTint = (value >> 7) & 1;
-    }
+    
 
-    void write_oam_address(u8 value)
-    {
-        oamAddress = value;
-    }
-
-    void write_oam_data(u8 value)
-    {
-        oamData[oamAddress++] = value;
-    }
-
-    void write_scroll(u8 value)
-    {
-        if (!latch)
-        {
-
-        }
-        else
-        {
-
-        }
-    }
-
-    u16 nametable_mirror(u16 addr)
-    {
-        if (addr < 0x2800) return addr;
-        else return addr - 0x800;
-    }
-
-    void tick()
-    {
-        if (nmiDelay > 0)
-        {
-            nmiDelay--;
-            if (nmiDelay == 0 && nmiOutput && nmiOccurred)
-            {
-                // std::cout << "vertical blanking..." << std::endl;
-                CPU::trigger_nmi();
-            }
-        }
-
-        if (flagShowBackground != 0 || flagShowSprites != 0)
-        {
-            if (f == 1 && scanline == 261 && cycle == 339)
-            {
-                cycle = 0;
-                scanline = 0;
-                frame++;
-                f ^= 1;
-                return;
-            }
-        }
-
-        cycle++;
-
-        if (cycle > 341)
-        {
-            cycle = 0;
-            scanline++;
-            if (scanline > 261)
-            {
-                scanline = 0;
-                frame++;
-                f ^= 1;
-            }
-        }
-    }
-
-    // PPUSTATUS
-    u8 read_status()
-    {
-        u8 result = 0;
-        result |= regis & 0x1F;
-        result |= flagSpriteOverflow << 5;
-        result |= flagSpriteZeroHit << 6;
-
-        if (nmiOccurred) result |= 1 << 7;
-
-        nmiOccurred = 0;
-        nmi_change();
-        latch = false;
-        return result; 
-    }
-
-    inline u32 color_map(u8 h)
-    {
-        switch (h)
-        {
-            case 0: return 0;
-            case 1: return 0x333333;
-            case 2: return 0x999999;
-            case 3: return 0xCCCCCC;
-            default: assert(0);
-        }
-    }
-
-    inline void evaluate_tile(u32 tlx, u32 tly, u32 pattern_idx)
-    {
-        assert(pattern_idx < 256);
-
-        for (u16 y = 0; y < 8; y++)
-        {
-            u8 lo = read(pattern_idx * 16 + y);
-            u8 hi = read(pattern_idx * 16 + y + 8);
-            for (u32 x = 0; x < 8; x++)
-            {
-                u32 df = 7 - x;
-                u8 pix = ((lo >> df) & 1) | (((hi >> df) & 1) << 1);
-                back.setPixel(tlx + x, tly + y, color_map(pix));
-            }
-        }
-    }
-
-    void step()
-    {
-        tick();
-
-        bool rendering_enabled = flagShowBackground || flagShowSprites;
-        bool pre_line = scanline == 261;
-        bool visible_line = scanline < 240;
-        bool render_line = pre_line || visible_line;
-        bool pre_fetch_cycle = (321 <= cycle) && (cycle <= 336);
-        bool visible_cycle = (cycle >= 1) && (cycle <= 256);
-        bool fetch_cycle = pre_fetch_cycle || visible_cycle;
-
-        // std::cout << "(" << scanline << ", " << cycle << ")" << std::endl;
-
-        if (scanline == 241 && cycle == 1) set_vertical_blank();
-
-        if (pre_line && cycle == 1)
-        {
-            clear_vertical_blank();
-            flagSpriteZeroHit = 0;
-            flagSpriteOverflow = 0;
-        }
-    }
-
-    void nmi_change()
-    {
-        u8 nmi = nmiOutput && nmiOccurred;
-        if (nmi && !nmiPrevious) nmiDelay = 1;
-        nmiPrevious = nmi;
-    }
-
-    void set_vertical_blank()
-    {
-        swap_frame_buffer();
-        nmiOccurred = 1;
-        nmi_change();
-    }
-
-    void clear_vertical_blank()
-    {
-        nmiOccurred = false;
-        nmi_change();
-    }
-
-    u8 read_palette(u16 addr)
-    {
-        if (addr >= 16 && addr % 4 == 0) addr -= 16;
-
-        return paletteData[addr];
-    }
-
-    void write_palette(u16 addr, u8 value)
-    {
-        if (addr >= 16 && addr % 4 == 0) addr -= 16;
-
-        paletteData[addr] = value;
-    }
-
-    void swap_frame_buffer()
-    {
-        for (u32 y = 0; y < 240; y += 8)
-        {
-            for (u32 x = 0; x < 256; x += 8)
-            {
-                u16 base = 0x2000 + (x / 128) * 0x400 + (y / 120) * 0x800;
-                u8 pattern_idx = read(base + (x % 128) / 8 + ((y % 120) / 8) * 16);
-                evaluate_tile(x, y, pattern_idx);
-            }
-        }
-
-        back.setPixel(256 - 1, 240 - 1, f ? 0xFFFFFF : 0);
-
-        // std::swap(front, back);
-        Display::loadImage(back);
-    }
 }

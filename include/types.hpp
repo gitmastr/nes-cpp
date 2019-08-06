@@ -5,7 +5,6 @@
 #include <string>
 #include <iostream>
 #include <memory>
-#include <fmt/format.h>
 
 using std::string;
 using std::vector;
