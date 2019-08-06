@@ -1,5 +1,5 @@
-myLogPath = 'logs/CPU.log'
-goodLogPath = 'logs/accurate.log'
+myLogPath = 'mylog.log'
+goodLogPath = 'accurate.log'
 
 with open(myLogPath, 'r') as file:
     myLogLines = [line for line in file] 

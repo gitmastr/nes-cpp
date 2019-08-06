@@ -59,6 +59,7 @@ namespace CPU
         AddressingMode mode;
     } info;
 
+    void init();
     void setZ(u8 value);
     void setN(u8 value);
     void setZN(u8 value);
@@ -71,6 +72,9 @@ namespace CPU
     void nmi();
     void irq();
     void dispatch(u8 opcode);
+    void printInstruction();
+    void trigger_nmi();
+    void trigger_irq();
 
     bool pagesDiffer(u16 a, u16 b);
 
@@ -86,7 +90,8 @@ namespace CPU
     extern const u8 instructionCycles[];
     extern const u8 instructionPageCycles[];
     extern const string instructionNames[];
-    extern const std::function<void()> opcodeList[];
+    using void_func_ptr = void (*)();
+    extern const void_func_ptr opcodeList[];
 
     /* Instructions below */
     namespace Instructions

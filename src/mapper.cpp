@@ -1,4 +1,5 @@
 #include <memory>
+#include <cassert>
 #include "mapper.hpp"
 #include "console.hpp"
 #include "cartridge.hpp"
@@ -15,6 +16,7 @@ Mapper::~Mapper()
 
 std::unique_ptr<Mapper> Mapper::generateMapper()
 {
+    assert(Cartridge::mapper == 0);
     return std::make_unique<Mapper2>();
 }
 

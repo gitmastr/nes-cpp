@@ -19,6 +19,7 @@ namespace Display
     extern SDL_Texture *texture;
 
     void init(u32 scalar);
+    void deinit();
     void loadImage(Image &image);
 
 }

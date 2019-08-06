@@ -11,4 +11,6 @@ namespace Console
     extern std::unique_ptr<Mapper> mapper;
 
     bool init(const string& fileName);
+    void deinit();
+    u32 step();
 }

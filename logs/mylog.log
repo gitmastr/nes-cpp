@@ -9077,3 +9077,924 @@ C5F4  40        RTI                             A:B9 X:FF Y:15 P:26 SP:FC PPU: 8
 C5F4  40        RTI                             A:B9 X:FF Y:15 P:26 SP:FC PPU:121,238
 005E  00 00     BRK                             A:B9 X:FF Y:15 P:26 SP:FF PPU:139,238
 C5F4  40        RTI                             A:B9 X:FF Y:15 P:26 SP:FC PPU:160,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:178,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:184,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:190,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:196,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:202,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:208,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:214,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:220,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:226,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:232,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:238,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:244,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:250,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:256,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:262,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:268,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:274,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:280,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:286,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:292,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:298,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:304,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:310,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:316,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:322,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:328,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:334,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:340,238
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  5,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 11,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 17,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 23,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 29,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 35,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 41,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 47,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 53,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 59,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 65,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 71,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 77,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 83,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 89,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 95,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:101,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:107,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:113,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:119,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:125,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:131,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:137,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:143,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:149,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:155,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:161,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:167,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:173,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:179,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:185,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:191,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:197,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:203,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:209,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:215,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:221,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:227,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:233,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:239,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:245,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:251,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:257,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:263,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:269,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:275,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:281,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:287,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:293,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:299,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:305,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:311,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:317,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:323,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:329,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:335,239
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  0,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  6,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 12,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 18,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 24,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 30,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 36,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 42,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 48,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 54,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 60,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 66,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 72,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 78,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 84,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 90,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 96,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:102,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:108,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:114,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:120,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:126,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:132,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:138,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:144,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:150,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:156,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:162,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:168,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:174,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:180,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:186,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:192,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:198,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:204,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:210,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:216,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:222,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:228,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:234,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:240,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:246,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:252,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:258,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:264,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:270,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:276,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:282,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:288,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:294,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:300,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:306,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:312,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:318,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:324,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:330,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:336,240
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  1,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  7,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 13,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 19,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 25,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 31,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 37,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 43,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 49,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 55,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 61,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 67,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 73,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 79,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 85,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 91,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 97,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:103,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:109,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:115,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:121,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:127,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:133,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:139,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:145,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:151,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:157,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:163,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:169,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:175,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:181,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:187,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:193,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:199,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:205,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:211,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:217,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:223,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:229,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:235,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:241,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:247,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:253,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:259,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:265,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:271,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:277,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:283,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:289,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:295,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:301,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:307,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:313,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:319,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:325,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:331,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:337,241
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  2,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  8,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 14,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 20,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 26,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 32,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 38,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 44,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 50,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 56,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 62,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 68,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 74,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 80,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 86,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 92,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 98,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:104,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:110,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:116,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:122,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:128,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:134,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:140,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:146,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:152,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:158,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:164,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:170,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:176,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:182,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:188,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:194,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:200,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:206,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:212,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:218,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:224,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:230,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:236,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:242,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:248,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:254,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:260,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:266,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:272,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:278,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:284,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:290,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:296,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:302,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:308,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:314,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:320,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:326,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:332,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:338,242
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  3,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  9,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 15,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 21,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 27,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 33,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 39,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 45,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 51,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 57,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 63,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 69,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 75,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 81,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 87,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 93,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 99,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:105,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:111,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:117,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:123,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:129,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:135,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:141,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:147,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:153,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:159,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:165,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:171,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:177,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:183,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:189,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:195,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:201,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:207,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:213,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:219,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:225,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:231,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:237,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:243,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:249,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:255,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:261,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:267,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:273,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:279,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:285,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:291,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:297,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:303,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:309,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:315,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:321,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:327,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:333,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:339,243
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  4,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 10,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 16,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 22,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 28,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 34,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 40,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 46,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 52,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 58,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 64,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 70,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 76,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 82,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 88,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 94,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:100,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:106,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:112,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:118,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:124,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:130,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:136,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:142,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:148,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:154,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:160,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:166,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:172,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:178,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:184,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:190,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:196,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:202,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:208,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:214,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:220,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:226,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:232,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:238,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:244,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:250,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:256,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:262,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:268,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:274,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:280,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:286,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:292,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:298,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:304,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:310,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:316,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:322,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:328,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:334,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:340,244
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  5,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 11,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 17,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 23,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 29,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 35,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 41,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 47,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 53,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 59,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 65,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 71,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 77,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 83,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 89,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 95,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:101,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:107,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:113,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:119,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:125,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:131,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:137,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:143,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:149,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:155,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:161,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:167,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:173,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:179,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:185,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:191,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:197,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:203,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:209,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:215,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:221,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:227,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:233,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:239,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:245,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:251,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:257,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:263,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:269,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:275,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:281,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:287,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:293,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:299,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:305,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:311,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:317,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:323,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:329,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:335,245
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  0,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  6,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 12,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 18,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 24,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 30,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 36,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 42,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 48,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 54,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 60,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 66,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 72,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 78,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 84,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 90,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 96,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:102,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:108,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:114,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:120,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:126,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:132,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:138,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:144,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:150,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:156,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:162,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:168,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:174,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:180,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:186,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:192,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:198,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:204,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:210,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:216,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:222,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:228,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:234,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:240,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:246,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:252,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:258,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:264,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:270,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:276,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:282,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:288,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:294,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:300,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:306,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:312,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:318,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:324,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:330,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:336,246
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  1,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  7,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 13,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 19,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 25,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 31,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 37,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 43,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 49,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 55,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 61,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 67,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 73,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 79,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 85,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 91,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 97,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:103,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:109,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:115,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:121,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:127,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:133,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:139,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:145,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:151,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:157,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:163,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:169,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:175,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:181,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:187,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:193,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:199,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:205,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:211,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:217,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:223,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:229,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:235,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:241,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:247,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:253,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:259,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:265,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:271,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:277,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:283,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:289,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:295,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:301,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:307,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:313,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:319,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:325,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:331,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:337,247
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  2,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  8,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 14,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 20,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 26,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 32,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 38,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 44,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 50,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 56,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 62,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 68,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 74,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 80,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 86,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 92,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 98,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:104,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:110,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:116,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:122,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:128,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:134,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:140,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:146,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:152,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:158,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:164,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:170,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:176,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:182,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:188,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:194,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:200,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:206,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:212,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:218,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:224,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:230,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:236,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:242,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:248,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:254,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:260,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:266,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:272,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:278,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:284,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:290,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:296,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:302,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:308,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:314,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:320,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:326,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:332,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:338,248
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  3,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  9,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 15,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 21,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 27,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 33,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 39,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 45,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 51,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 57,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 63,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 69,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 75,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 81,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 87,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 93,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 99,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:105,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:111,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:117,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:123,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:129,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:135,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:141,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:147,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:153,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:159,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:165,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:171,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:177,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:183,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:189,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:195,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:201,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:207,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:213,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:219,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:225,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:231,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:237,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:243,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:249,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:255,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:261,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:267,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:273,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:279,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:285,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:291,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:297,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:303,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:309,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:315,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:321,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:327,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:333,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:339,249
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  4,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 10,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 16,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 22,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 28,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 34,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 40,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 46,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 52,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 58,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 64,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 70,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 76,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 82,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 88,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 94,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:100,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:106,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:112,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:118,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:124,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:130,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:136,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:142,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:148,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:154,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:160,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:166,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:172,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:178,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:184,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:190,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:196,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:202,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:208,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:214,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:220,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:226,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:232,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:238,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:244,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:250,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:256,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:262,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:268,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:274,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:280,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:286,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:292,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:298,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:304,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:310,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:316,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:322,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:328,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:334,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:340,250
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  5,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 11,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 17,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 23,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 29,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 35,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 41,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 47,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 53,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 59,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 65,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 71,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 77,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 83,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 89,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 95,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:101,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:107,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:113,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:119,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:125,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:131,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:137,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:143,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:149,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:155,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:161,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:167,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:173,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:179,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:185,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:191,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:197,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:203,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:209,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:215,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:221,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:227,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:233,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:239,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:245,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:251,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:257,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:263,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:269,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:275,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:281,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:287,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:293,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:299,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:305,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:311,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:317,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:323,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:329,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:335,251
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  0,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  6,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 12,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 18,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 24,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 30,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 36,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 42,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 48,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 54,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 60,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 66,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 72,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 78,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 84,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 90,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 96,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:102,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:108,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:114,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:120,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:126,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:132,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:138,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:144,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:150,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:156,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:162,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:168,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:174,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:180,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:186,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:192,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:198,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:204,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:210,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:216,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:222,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:228,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:234,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:240,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:246,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:252,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:258,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:264,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:270,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:276,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:282,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:288,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:294,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:300,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:306,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:312,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:318,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:324,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:330,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:336,252
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  1,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  7,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 13,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 19,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 25,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 31,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 37,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 43,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 49,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 55,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 61,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 67,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 73,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 79,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 85,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 91,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 97,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:103,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:109,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:115,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:121,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:127,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:133,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:139,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:145,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:151,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:157,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:163,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:169,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:175,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:181,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:187,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:193,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:199,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:205,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:211,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:217,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:223,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:229,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:235,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:241,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:247,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:253,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:259,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:265,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:271,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:277,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:283,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:289,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:295,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:301,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:307,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:313,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:319,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:325,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:331,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:337,253
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  2,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:  8,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 14,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 20,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 26,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 32,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 38,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 44,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 50,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 56,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 62,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 68,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 74,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 80,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 86,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 92,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU: 98,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:104,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:110,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:116,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:122,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:128,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:134,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:140,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:146,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:152,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:158,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:164,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:170,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:176,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:182,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:188,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:194,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:200,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:206,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:212,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:218,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:224,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:230,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:236,254
+0060  89        NOP                             A:B9 X:FF Y:15 P:26 SP:FF PPU:242,254

@@ -17,7 +17,6 @@ namespace CPUMemory
         else if (addr  < 0x6000) return 0; /* IO Registers? */
         else if (addr >= 0x6000) return Console::mapper->read(addr);
 
-
         throw "invalid read";
         return 0;
     }
@@ -58,6 +57,10 @@ namespace CPU
     i32 stall = 0;
     stepinfo_t info;
 
+    void init()
+    {
+        reset();
+    }
 
     void setPC(u16 pc)
     {
@@ -157,6 +160,35 @@ namespace CPU
         opcodeList[opcode]();
 
         return static_cast<u32>(cycles - oldCycles);
+    }
+
+    void trigger_nmi()
+    {
+        interrupt = InterruptType::NMI;
+    }
+
+    void trigger_irq()
+    {
+        if (I == 0) interrupt = InterruptType::IRQ;
+    }
+
+    void printInstruction()
+    {
+        u8 opcode = read(PC);
+        u8 bytes = instructionSizes[opcode];
+        char name[4]; strcpy(name, instructionNames[opcode].c_str());
+    
+        char w0[3], w1[3], w2[3];
+        sprintf(w0, "%02X", opcode);
+        sprintf(w1, "%02X", read(PC + 1));
+        sprintf(w2, "%02X", read(PC + 2));
+    
+        if (bytes < 2) strcpy(w1, "  ");
+        if (bytes < 3) strcpy(w2, "  ");
+    
+        printf("%04X  %s %s %s  %s %27s A:%02X X:%02X Y:%02X P:%02X SP:%02X PPU:%3ld,%3ld\n",
+            PC, w0, w1, w2, name, "", A, X, Y, 
+            flags(), SP, (cycles * 3) % 341, (3 * cycles) / 341);
     }
 
     void runAndLog(u32 number)

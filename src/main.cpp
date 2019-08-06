@@ -1,30 +1,37 @@
 #include <iostream>
-#include <SDL2/SDL.h>
+#include <iomanip>
 #include "console.hpp"
 #include "image.hpp"
 #include "display.hpp"
-
+#include "cpu.hpp"
+#include "ppu.hpp"
+#include "mapper.hpp"
+#include "SDL2/SDL.h"
 
 int main(int argc, char *argv[])
 {
-    Console::init("roms/nestest.nes");
-    Display::init(4);
+    Console::init("roms/mario.nes");
 
-    Image img(256, 240);
+    SDL_Event event;
+    bool quit = false;
 
-    img.fill(0, 0, 255);
+    for (int i = 0; i < 240; i++) PPU::nametableData[i] = i + 16;
 
-    for (int x = 0; x < 240; x++)
+
+    while (!quit)
     {
-        img.setPixel(x, x, 0, 255, 0);
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_QUIT) quit = true;
+        }
+
+        for (u32 i = 0; i < (1 << 10); i++)
+            Console::step();
     }
 
-    Display::loadImage(img);
+    std::cout << "Cycles: " << std::setprecision(2) << (CPU::cycles / 1000000000.) << " billion" << std::endl;
+    std::cout << "Frames: " << PPU::frame << std::endl;
 
-
-    SDL_Delay(1000);
-
-
-    SDL_Quit();
+    Console::deinit();
     return 0;
 }

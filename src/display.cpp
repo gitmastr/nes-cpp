@@ -5,7 +5,7 @@
 
 namespace Display
 {
-    const string TITLE = "NSE";
+    const string TITLE = "nes.xlsx";
     const u32 WIDTH = 256;
     const u32 HEIGHT = 240;
 
@@ -15,6 +15,8 @@ namespace Display
 
     void init(u32 scalar)
     {
+        if (SDL_Init(SDL_INIT_VIDEO) < 0) throw "SDL init error";
+
         window = SDL_CreateWindow(TITLE.c_str(),
                                   SDL_WINDOWPOS_UNDEFINED,
                                   SDL_WINDOWPOS_UNDEFINED,
@@ -22,7 +24,7 @@ namespace Display
 
         if (window == NULL) throw "SDL window error";
 
-        renderer = SDL_CreateRenderer(window, -1, 0);
+        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC); // | SDL_RENDERER_PRESENTVSYNC);
 
         if (renderer == NULL) throw "SDL renderer error";
 
@@ -33,18 +35,20 @@ namespace Display
 
     void deinit()
     {
+        SDL_RenderClear(renderer);
         SDL_DestroyTexture(texture);
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
+        SDL_Quit();
     }
 
     void loadImage(Image &image)
     {
         assert(image.width == WIDTH && image.height == HEIGHT);
 
-        SDL_UpdateTexture(texture, nullptr, image.getBuffer(), WIDTH * sizeof(u32));
-        SDL_RenderClear(renderer);
-        SDL_RenderCopy(renderer, texture, nullptr, nullptr);
+        assert(SDL_UpdateTexture(texture, nullptr, image.getBuffer(), WIDTH * sizeof(u32)) == 0);
+        assert(SDL_RenderClear(renderer) == 0);
+        assert(SDL_RenderCopy(renderer, texture, nullptr, nullptr) == 0);
         SDL_RenderPresent(renderer);
     }
 }
