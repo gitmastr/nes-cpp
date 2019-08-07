@@ -30,6 +30,8 @@ namespace PPU
     namespace Nametable
     {
         extern array<u8, 2048> data;
+        void write(u16 address, u8 value);
+        u8 read(u16 address);
     }
 
     namespace OAM
@@ -43,4 +45,9 @@ namespace PPU
         u8 read(u16 address);
         void write(u16 address, u8 value);
     }
+
+    void init();
+    void tick();
+    u8 read_register(u16 address);
+    void write_register(u16 address, u8 value);
 }

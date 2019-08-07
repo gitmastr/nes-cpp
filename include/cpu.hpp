@@ -4,6 +4,13 @@
 #include <ostream>
 #include <functional>
 
+namespace CPUMemory
+{
+    u8 read(u16 addr);
+    void write(u16 addr, u8 value);
+}
+
+
 namespace CPU
 {
     void logInstruction();

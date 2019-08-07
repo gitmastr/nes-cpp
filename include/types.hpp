@@ -7,6 +7,7 @@
 #include <memory>
 #include <array>
 #include <exception>
+#include <cstdio>
 
 using std::string;
 using std::vector;

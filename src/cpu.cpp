@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <cstring>
 #include "cpu.hpp"
+#include "ppu.hpp"
 #include "console.hpp"
 #include "mapper.hpp"
 
@@ -10,8 +11,8 @@ namespace CPUMemory
     u8 read(u16 addr)
     {
         if      (addr  < 0x2000) return Console::ram[addr % 0x0800];
-        else if (addr  < 0x4000) return 0; /* PPU */
-        else if (addr == 0x4014) return 0; /* PPU */
+        else if (addr  < 0x4000) return PPU::read_register(0x2000 + addr % 8); /* PPU */
+        else if (addr == 0x4014) return PPU::read_register(addr); /* PPU */
         else if (addr == 0x4015) return 0; /* APU */
         else if (addr == 0x4016) return 0; /* Controller1 */
         else if (addr == 0x4017) return 0; /* Controller2 */
@@ -25,8 +26,8 @@ namespace CPUMemory
     void write(u16 addr, u8 value)
     {
         if      (addr  < 0x2000) Console::ram[addr % 0x0800] = value;
-        else if (addr  < 0x4000) return; /* PPU */
-        else if (addr  < 0x4014) return; /* APU */
+        else if (addr  < 0x4000) PPU::write_register(0x2000 + addr % 8, value);
+        else if (addr  < 0x4014) PPU::write_register(0x4014, value);
         else if (addr == 0x4014) return; /* PPU */
         else if (addr == 0x4015) return; /* APU */
         else if (addr == 0x4016) return; /* Controllers */

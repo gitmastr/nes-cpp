@@ -1,14 +1,15 @@
 #include <memory>
+#include <cstdio>
 #include "console.hpp"
+#include "ppu.hpp"
 #include "mapper.hpp"
 #include "cartridge.hpp"
 #include "cpu.hpp"
 
-const u64 CONSOLE_RAM_BYTES = 2048;
 
 namespace Console
 {
-    vector<u8> ram(CONSOLE_RAM_BYTES);
+    array<u8, CONSOLE_RAM_BYTES> ram;
     std::unique_ptr<Mapper> mapper;
 
     bool init(const string& fileName)
@@ -16,6 +17,7 @@ namespace Console
         Cartridge::init(fileName);
         mapper = std::move(Mapper::generateMapper());
         CPU::init();
+        PPU::init();
         return true;
     }
 
@@ -26,6 +28,12 @@ namespace Console
     u32 step()
     {
         u32 cpu_cycles = CPU::step();
+        u32 to_run_ppu = 3 * cpu_cycles;
+
+        for (u32 i = 0; i < to_run_ppu; i++)
+        {
+            PPU::tick();
+        }
 
         return cpu_cycles;
     }
