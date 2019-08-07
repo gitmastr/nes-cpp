@@ -5,13 +5,13 @@
 
 namespace Cartridge
 {
-    const size_t SRAM_SIZE_BYTES = 0x2000;
+    const u64 SRAM_SIZE_BYTES = 0x2000;
 
     vector<u8> prg;
     vector<u8> chr;
     vector<u8> sram(SRAM_SIZE_BYTES);
     u8 mapper = 0;
-    u8 mirror = 0;
+    MirrorMode mirror_mode = MirrorMode::Horizontal;
     u8 battery = 0;
 
     void init(const string &fileName)
@@ -48,7 +48,7 @@ namespace Cartridge
 
         u8 mirror1 = control1 & 1;
         u8 mirror2 = (control2 >> 3) & 1;
-        mirror = mirror1 | (mirror2 << 1);
+        mirror_mode = static_cast<MirrorMode>(mirror1 | (mirror2 << 1));
 
         battery = (control1 >> 1) & 1;
 

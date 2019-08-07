@@ -1,5 +1,6 @@
 #include <ios>
 #include <iomanip>
+#include <cstring>
 #include "cpu.hpp"
 #include "console.hpp"
 #include "mapper.hpp"
