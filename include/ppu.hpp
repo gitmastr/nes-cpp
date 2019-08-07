@@ -29,12 +29,18 @@ namespace PPU
 
     namespace Nametable
     {
-        extern vector<u8> data;
+        extern array<u8, 2048> data;
+    }
+
+    namespace OAM
+    {
+        extern array<u8, 256> data;
     }
 
     namespace Palette
     {
-        extern vector<u8> palette;
+        extern array<u8, 32> palette;
         u8 read(u16 address);
+        void write(u16 address, u8 value);
     }
 }

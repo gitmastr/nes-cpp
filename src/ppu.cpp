@@ -56,6 +56,16 @@ namespace PPUMemory
         if (address < 0x4000) return PPU::Palette::read(address % 32);
         throw std::invalid_argument("invalid address");
     }
+
+    void write(u16 address, u8 value)
+    {
+        address = address % 0x4000;
+        if (address < 0x2000) Console::mapper->write(address, value);
+        else if (address < 0x3F00)
+                              PPU::Nametable::data[mirror_address(address) % 2048] = value;
+        else if (address < 0x4000)
+                              PPU::Palette::write(address % 32, value);
+    }
 }
 
 namespace PPU 
@@ -196,17 +206,35 @@ namespace PPU
 
     namespace Nametable 
     {
-        vector<u8> data;
+        array<u8, 2048> data;
+    }
+
+    namespace OAM 
+    {
+        array<u8, 256> data;
     }
 
     namespace Palette 
     {
-        vector<u8> palette;
+        array<u8, 2048> data;
+
+        u16 mirror(u16 address)
+        {
+            // Addresses $3F10/$3F14/$3F18/$3F1C are 
+            // mirrors of $3F00/$3F04/$3F08/$3F0C.
+            if (address > 16 && address % 4 == 0)
+                address -= 16;
+            return address;
+        }
+
         u8 read(u16 address)
         {
-            return 0;
+            return data[mirror(address)];
+        }
+
+        void write(u16 address, u8 value)
+        {
+            data[mirror(address)] = value;
         }
     }
-    
-
 }

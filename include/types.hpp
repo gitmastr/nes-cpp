@@ -5,9 +5,12 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <array>
+#include <exception>
 
 using std::string;
 using std::vector;
+using std::array;
 using std::unique_ptr;
 
 typedef uint64_t u64;
