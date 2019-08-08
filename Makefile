@@ -7,7 +7,7 @@ INCLUDE_DIR = include
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
 HDR = $(wildcard $(INCLUDE_DIR)/*.hpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
-CPPFLAGS += -std=c++17 -Wall -Wpedantic -I$(INCLUDE_DIR) -g3 -Og
+CPPFLAGS += -std=c++17 -Wall -Wpedantic -I$(INCLUDE_DIR) -g3 -Og -D_GLIBCXX_DEBUG
 # CPPFLAGS += -std=c++17 -Wall -I$(INCLUDE_DIR) -O3 -flto
 LDFLAGS += -Llib
 LDLIBS += -lm -lSDL2main -lSDL2
