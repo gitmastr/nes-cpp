@@ -188,7 +188,7 @@ namespace CPU
         if (bytes < 2) strcpy(w1, "  ");
         if (bytes < 3) strcpy(w2, "  ");
     
-        printf("%04X  %s %s %s  %s %27s A:%02X X:%02X Y:%02X P:%02X SP:%02X PPU:%3ld,%3ld\n",
+        printf("[CPU] %04X  %s %s %s  %s %27s A:%02X X:%02X Y:%02X P:%02X SP:%02X PPU:%3ld,%3ld\n",
             PC, w0, w1, w2, name, "", A, X, Y, 
             flags(), SP, (cycles * 3) % 341, (3 * cycles) / 341);
     }
@@ -197,6 +197,7 @@ namespace CPU
     {
         for (u32 i = 0; i < number; i++)
         {
+            printInstruction();
             step();
         }
 
@@ -402,6 +403,7 @@ namespace CPU
         void bit() 
         { 
             u8 value = read(info.addr);
+            printf("info.addr is %X\n", info.addr);
             V = (value >> 6) & 1;
             setZ(value & A);
             setN(value);

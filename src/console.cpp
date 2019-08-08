@@ -27,6 +27,7 @@ namespace Console
 
     u32 step()
     {
+        CPU::printInstruction();
         u32 cpu_cycles = CPU::step();
         u32 to_run_ppu = 3 * cpu_cycles;
 

@@ -33,7 +33,6 @@ namespace PPUMemory
 
     u16 mirror_address(u16 address)
     {
-        return address;
         address = address % 0x1000;
         u16 table = address / 0x0400;
         u16 offset = address % 0x0400;
@@ -136,12 +135,12 @@ namespace PPU
             if (VERBOSE) printf("[CTRL] Wrote value 0x%X to PPUCTRL\n", value);
 
             NN = value & 0b00000011;
-            I  = value & 0b00000100;
-            S  = value & 0b00001000;
-            B  = value & 0b00010000;
-            H  = value & 0b00100000;
-            P  = value & 0b01000000;
-            V  = value & 0b10000000;
+            I  = (value & 0b00000100) > 0;
+            S  = (value & 0b00001000) > 0;
+            B  = (value & 0b00010000) > 0;
+            H  = (value & 0b00100000) > 0;
+            P  = (value & 0b01000000) > 0;
+            V  = (value & 0b10000000) > 0;
 
             // t: ....BA.. ........ = d: ......BA
             ADDR::temp_vram_address |= 0b0000110000000000;
@@ -461,7 +460,7 @@ namespace PPU
 
     u8 read_register(u16 address)
     {
-        if (VERBOSE) printf("Reading register 0x%X\n", address);
+        if (VERBOSE) printf("[PPUREG] Reading register 0x%X\n", address);
         switch (static_cast<Register>(address))
         {
             case Register::PPUCTRL:   return CTRL::read();        // 0x2000
