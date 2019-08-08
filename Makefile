@@ -6,7 +6,7 @@ OBJ_DIR = obj
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 CPPFLAGS += -std=c++17 -Wall -Iinclude -g3 -D_GLIBCXX_DEBUG -Og
-# CPPFLAGS += -std=c++17 -Wall -Iinclude -O2 -flto
+# CPPFLAGS += -std=c++17 -Wall -Iinclude -O3 -flto
 LDFLAGS += -Llib
 LDLIBS += -lm -lSDL2
 CC = g++

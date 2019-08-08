@@ -4,6 +4,7 @@
 #include "console.hpp"
 #include "mapper.hpp"
 #include "display.hpp"
+#include "palettedata.hpp"
 #include <exception>
 #include <map>
 
@@ -361,7 +362,16 @@ namespace PPU
 
     namespace Palette 
     {
-        array<u8, 2048> data;
+        array<u8, 32> data;
+
+        u8 get_shift(u8 row, u8 col)
+        {
+
+            // bottom right, top right, bottom left, top left
+            const u8 shifts[] = { 6, 2, 4, 0 };
+            //                left               top
+            return shifts[(col % 4 < 2) << 1 | (row % 4 < 2)];
+        }
 
         u16 mirror(u16 address)
         {
@@ -397,6 +407,12 @@ namespace PPU
                 u16 byte = col + row * 32;
                 u8 fetched = PPUMemory::read(0x2000 + byte);
                 u16 offset = CTRL::B ? 0x1000 : 0x0;
+                
+                u16 attrib_idx = (col / 4) + (row / 4) * 8;
+                u8 attrib = PPUMemory::read(0x23C0 + attrib_idx);
+
+                u8 palette = (attrib >> Palette::get_shift(row, col)) & 0b11;
+
                 for (u8 drow = 0; drow < 8; drow++)
                 {
                     u8 first = PPUMemory::read(offset + 16 * fetched + drow);
@@ -404,14 +420,13 @@ namespace PPU
                     for (u8 z = 0; z < 8; z++)
                     {
                         u8 pixel = 2 * ((second >> z) & 1) + ((first >> z) & 1);
-                        u32 rgbcolor = 0;
-                        switch (pixel)
-                        {
-                            case 0: rgbcolor = 0x000000; break;
-                            case 1: rgbcolor = 0x555555; break;
-                            case 2: rgbcolor = 0xAAAAAA; break;
-                            case 3: rgbcolor = 0xFFFFFF; break;
-                        }
+                        u32 rgbcolor;
+                        if (pixel > 0)
+                            rgbcolor = PaletteData::data[Palette::read(
+                                4 * palette + pixel
+                            )];
+                        else // universal background color
+                            rgbcolor = PaletteData::data[Palette::read(0)];
 
                         Display::writePixel(col * 8 + 7 - z, row * 8 + drow, rgbcolor);
                     }
