@@ -179,4 +179,4 @@ namespace CPU
         void tas();
         void xaa();
     }
-};
+}

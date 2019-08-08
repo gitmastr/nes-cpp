@@ -6,12 +6,13 @@
 #include "cartridge.hpp"
 #include "cpu.hpp"
 #include "display.hpp"
+#include "input.hpp"
 #include "SDL2/SDL.h"
 #include <chrono>
 #include <exception>
 #include <thread>
 
-const double FRAMERATE = 60;
+const double FRAMERATE = 60.0988;
 const u64 MAX_FRAME_JUMP = 2;
 const u64 DESYNC_MAX_WRAPAROUND = 10; 
     // if we're behind by more frames than this
@@ -36,12 +37,13 @@ namespace Console
     void run()
     {
         auto program_start = std::chrono::high_resolution_clock::now();
+        auto current_time = program_start;
         bool quit = false;
         u64 frame_count_offset = 0;
         auto last_print = program_start;
         while (!quit)
         {
-            auto current_time = std::chrono::high_resolution_clock::now();
+            current_time = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> diff = current_time - program_start;
             std::chrono::duration<double> since_last_print = current_time - last_print;
             double seconds_passed = diff.count();
@@ -72,7 +74,6 @@ namespace Console
                 step();
             }
             
-
             if (render_this_tick == 0) SDL_Delay(1);
 
             SDL_Event event;
@@ -83,12 +84,13 @@ namespace Console
                     case SDL_QUIT:
                         quit = true;
                         break;
+                    case SDL_KEYDOWN:
+                    case SDL_KEYUP:
+                        Input::handle_event(event);
                     default:
                         break;
                 }
             }
-
-
         }
     }
 

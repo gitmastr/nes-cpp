@@ -17,6 +17,9 @@ namespace Cartridge
     void init(const string &fileName)
     {
         std::ifstream file(fileName, std::ios::in | std::ios::binary);
+
+        if (!file) throw std::invalid_argument("could not open file");
+
         file.unsetf(std::ios::skipws);
 
         file.seekg(0, std::ios::end);
@@ -30,7 +33,7 @@ namespace Cartridge
             buf[1] != 'E' ||
             buf[2] != 'S' ||
             buf[3] != 26)
-            throw "Invalid iNES file";
+            throw std::invalid_argument("invalid INES file");
 
         u8 numPRG = buf[4];
         u8 numCHR = buf[5];

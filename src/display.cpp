@@ -5,7 +5,7 @@
 const u32 DISPLAY_WIDTH = 256;
 const u32 DISPLAY_HEIGHT = 240;
 const string WINDOW_NAME = "NES";
-const u32 SCREEN_SIZE_MULTIPLIER = 4;
+const u32 SCREEN_SIZE_MULTIPLIER = 2;
 
 constexpr u32 rgb_to_u32(u8 r, u8 g, u8 b)
 {

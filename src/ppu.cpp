@@ -421,12 +421,10 @@ namespace PPU
                     {
                         u8 pixel = 2 * ((second >> z) & 1) + ((first >> z) & 1);
                         u32 rgbcolor;
-                        if (pixel > 0)
-                            rgbcolor = PaletteData::data[Palette::read(
-                                4 * palette + pixel
-                            )];
-                        else // universal background color
-                            rgbcolor = PaletteData::data[Palette::read(0)];
+                        if (pixel > 0) rgbcolor = PaletteData::data[Palette::read(
+                                    4 * palette + pixel
+                                )];
+                        else rgbcolor = PaletteData::data[Palette::read(0)];
 
                         Display::writePixel(col * 8 + 7 - z, row * 8 + drow, rgbcolor);
                     }
