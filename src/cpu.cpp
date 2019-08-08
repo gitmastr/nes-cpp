@@ -27,8 +27,8 @@ namespace CPUMemory
     {
         if      (addr  < 0x2000) Console::ram[addr % 0x0800] = value;
         else if (addr  < 0x4000) PPU::write_register(0x2000 + addr % 8, value);
-        else if (addr  < 0x4014) PPU::write_register(0x4014, value);
-        else if (addr == 0x4014) return; /* PPU */
+        else if (addr  < 0x4014) return; /* APU */
+        else if (addr == 0x4014) PPU::write_register(0x4014, value);
         else if (addr == 0x4015) return; /* APU */
         else if (addr == 0x4016) return; /* Controllers */
         else if (addr  < 0x6000) return; /* IO or something */
@@ -188,9 +188,10 @@ namespace CPU
         if (bytes < 2) strcpy(w1, "  ");
         if (bytes < 3) strcpy(w2, "  ");
     
-        printf("[CPU] %04X  %s %s %s  %s %27s A:%02X X:%02X Y:%02X P:%02X SP:%02X PPU:%3ld,%3ld\n",
+        printf("[CPU] %04X  %s %s %s  %s %27s A:%02X X:%02X Y:%02X P:%02X SP:%02X PPU:%3ld,%3ld V:%04X T:%04X\n",
             PC, w0, w1, w2, name, "", A, X, Y, 
-            flags(), SP, (cycles * 3) % 341, (3 * cycles) / 341);
+            flags(), SP, (cycles * 3) % 341, (3 * cycles) / 341,
+            PPU::ADDR::vram_address, PPU::ADDR::temp_vram_address);
     }
 
     void runAndLog(u32 number)
@@ -403,7 +404,6 @@ namespace CPU
         void bit() 
         { 
             u8 value = read(info.addr);
-            printf("info.addr is %X\n", info.addr);
             V = (value >> 6) & 1;
             setZ(value & A);
             setN(value);

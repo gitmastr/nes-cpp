@@ -5,18 +5,12 @@
 #include "mapper.hpp"
 #include "SDL2/SDL.h"
 
-const u64 CPU_CYCLES_MAX = 60000;
+const u64 CPU_CYCLES_MAX = static_cast<u64>(1) << 50;
 
 int main(int argc, char *argv[])
 {
-    Console::init("roms/color_test.nes");
-
-    u64 cycles = 0;
-    while (cycles < CPU_CYCLES_MAX)
-    {
-        cycles += Console::step();
-    }
-
+    Console::init("roms/dk.nes");
+    Console::run();
     Console::deinit();
     return 0;
 }

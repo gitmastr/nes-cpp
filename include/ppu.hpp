@@ -4,6 +4,8 @@
 
 namespace PPU
 {
+    extern u64 frame_count;
+
     namespace CTRL
     {
         void write(u8 value);
@@ -24,6 +26,8 @@ namespace PPU
 
     namespace ADDR
     {
+        extern u16 vram_address;
+        extern u16 temp_vram_address;
         void write(u8 value);
     }
 

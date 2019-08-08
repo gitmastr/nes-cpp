@@ -11,7 +11,7 @@ namespace Display
     void fill(u32 rgb);
     void fill(u8 r, u8 g, u8 b);
     void clear();
-    void render();
+    void flip();
     void buffer_to_file(const string &file_name);
     bool init();
     void deinit();

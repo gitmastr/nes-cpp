@@ -18,7 +18,7 @@ const u32 PALETTE_SIZE = 32;
 const u32 TILE_WIDTH = 8;
 const u32 TILE_HEIGHT = 8;
 
-const bool VERBOSE = true;
+const bool VERBOSE = false;
 
 namespace PPUMemory
 {
@@ -95,16 +95,17 @@ namespace PPU
         {
             if (!latch) // first write
             {
+                if (VERBOSE) printf("[ADDR] Wrote value %X on first pass\n", value);
                 temp_vram_address &= 0b11111111;
                 temp_vram_address |= (value & 0b111111) << 8;
             }
             else // second write
             {
-                temp_vram_address |= 0b11111111;
-                temp_vram_address &= value;
+                if (VERBOSE) printf("[ADDR] Wrote value %X on second pass\n", value);
+                temp_vram_address &= 0b1111111100000000;
+                temp_vram_address |= value;
+                vram_address = temp_vram_address;
             }
-
-            if (VERBOSE) printf("[ADDR] Wrote value %X\n", value);
 
             latch = !latch;
         }
@@ -209,7 +210,7 @@ namespace PPU
 
     namespace STATUS // $2002
     {
-        u8 reserved;
+        u8 reserved = 0;
         bool O; // sprite overflow. The intent was for this flag to be set
                 // whenever more than eight sprites appear on a scanline, but a
                 // hardware bug causes the actual behavior to be more complicated
@@ -227,11 +228,13 @@ namespace PPU
 
         u8 read()
         {
-            latch = false;
             u8 res = (reserved & 0b11111)
                  | (O << 5)
                  | (S << 6)
                  | (V << 7);
+
+            latch = false;
+            V = false;
             
             if (VERBOSE) printf("[STATUS] Read value 0x%X from PPUSTATUS\n", res);
             return res;
@@ -284,7 +287,7 @@ namespace PPU
         {
             PPUMemory::write(ADDR::vram_address, value);
             ADDR::vram_address += (CTRL::I) ? 32 : 1;
-            if (VERBOSE) printf("[DATA] Read value 0x%X from PPUDATA\n", value);
+            if (VERBOSE) printf("[DATA] Wrote value 0x%X to PPUDATA\n", value);
 
         }
     }
@@ -393,10 +396,11 @@ namespace PPU
             {
                 u16 byte = col + row * 32;
                 u8 fetched = PPUMemory::read(0x2000 + byte);
+                u16 offset = CTRL::B ? 0x1000 : 0x0;
                 for (u8 drow = 0; drow < 8; drow++)
                 {
-                    u8 first = PPUMemory::read(16 * fetched + drow);
-                    u8 second = PPUMemory::read(16 * fetched + drow + 8);
+                    u8 first = PPUMemory::read(offset + 16 * fetched + drow);
+                    u8 second = PPUMemory::read(offset + 16 * fetched + drow + 8);
                     for (u8 z = 0; z < 8; z++)
                     {
                         u8 pixel = 2 * ((second >> z) & 1) + ((first >> z) & 1);
@@ -404,25 +408,19 @@ namespace PPU
                         switch (pixel)
                         {
                             case 0: rgbcolor = 0x000000; break;
-                            case 1: rgbcolor = 0x444444; break;
-                            case 2: rgbcolor = 0x999999; break;
-                            case 3: rgbcolor = 0xCCCCCC; break;
+                            case 1: rgbcolor = 0x555555; break;
+                            case 2: rgbcolor = 0xAAAAAA; break;
+                            case 3: rgbcolor = 0xFFFFFF; break;
                         }
 
-                        Display::writePixel(col * 8 + z, row * 8 + drow, rgbcolor);
+                        Display::writePixel(col * 8 + 7 - z, row * 8 + drow, rgbcolor);
                     }
 
                 }
             }
         }
 
-        for (int i = 0; i < 256; i++)
-        {
-
-        }
-
-
-        Display::buffer_to_file("screenshots/frame" + std::to_string(frame_count) + ".ppm");
+        Display::flip();
 
 
         if (CTRL::V)
