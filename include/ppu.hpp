@@ -40,7 +40,8 @@ namespace PPU
 
     namespace OAM
     {
-        extern array<u8, 256> data;
+        extern vector<u8> data;
+        extern vector<u8> secondary_data;
     }
 
     namespace Palette

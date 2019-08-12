@@ -5,8 +5,10 @@
 #include "mapper.hpp"
 #include "display.hpp"
 #include "palettedata.hpp"
+#include "ppuutils.hpp"
 #include <exception>
 #include <map>
+#include <cassert>
 
 const u32 SCREEN_WIDTH = 256;
 const u32 SCREEN_HEIGHT = 240;
@@ -63,6 +65,8 @@ namespace PPUMemory
 
 namespace PPU 
 {
+    using PPUUtils::get_bit;
+
     enum class Register
     {
         PPUCTRL   = 0x2000,
@@ -80,6 +84,7 @@ namespace PPU
     u32 scan_line; // ranges from 0 - NUM_DOTS
     u32 dot; // ranges from 0 - NUM_DOTS
     u64 frame_count; // number of frames outputted
+
 
     namespace ADDR
     {
@@ -313,7 +318,12 @@ namespace PPU
 
     namespace OAM 
     {
-        array<u8, 256> data;
+        vector<u8> data(256);
+        vector<u8> secondary_data(32);
+        vector<u8> shift_reg_1(8);
+        vector<u8> shift_reg_2(8);
+        vector<u8> latches(8);
+        vector<u8> counters(8);
         u8 address;
 
         u8 read_address()
@@ -398,80 +408,140 @@ namespace PPU
         }
     }
 
+    void evaluate_sprites()
+    {
+        assert(dot == 257);
+
+        for (u32 i = 0; i < 32; i++) OAM::secondary_data[i] = 0xFF;
+
+        u32 sec_idx = 0;
+        u32 m = 0;
+        for (u32 n = 0; n < 64; n++)
+        {
+            if (sec_idx < 8)
+            {
+                u8 y = OAM::data[4 * n];
+                if (y <= scan_line < y + 8) // sprite hit
+                {
+                    for (u32 cpy = 1; cpy < 4; cpy++)
+                        OAM::secondary_data[4 * sec_idx + cpy] = OAM::data[4 * n + cpy];
+                    sec_idx++;
+                }
+            }
+            else
+            {
+                u8 y = OAM::data[4 * n + m];
+                if (y <= scan_line < y + 8) // if in range
+                {
+                    STATUS::O = true; // set sprite overflow
+                    m = 0;
+                }
+                else
+                {
+                    m += 1;
+                }
+            }
+        }
+
+        for (u32 i = 0; i < 8; i++)
+        {
+            if (true || i < sec_idx)
+            {
+                u8 attrib = OAM::secondary_data[4 * i + 2];
+                u8 x = OAM::secondary_data[4 * i + 3];
+                u8 y = OAM::secondary_data[4 * i + 0];
+                bool behind_bg = get_bit(attrib, 5);
+                bool flip_horiz = get_bit(attrib, 6);
+                bool flip_vert = get_bit(attrib, 7);
+                OAM::latches[i] = attrib;
+                OAM::counters[i] = x;
+                u16 offset = (CTRL::B ? 0x1000 : 0x0) + 16 * (attrib % 0x100) + (flip_vert ? y : 7 - y);
+                OAM::shift_reg_1[i] = PPUMemory::read(offset);
+                OAM::shift_reg_2[i] = PPUMemory::read(offset + 8);
+            }
+            else 
+            {
+                
+            }
+        }
+
+
+    }
+
     void vertical_blank()
     {
-        for (u8 row = 0; row < 30; row++)
-        {
-            for (u8 col = 0; col < 32; col++)
-            {
-                u16 byte = col + row * 32;
-                u8 fetched = PPUMemory::read(0x2000 + byte);
-                u16 offset = CTRL::B ? 0x1000 : 0x0;
+        // for (u8 row = 0; row < 30; row++)
+        // {
+        //     for (u8 col = 0; col < 32; col++)
+        //     {
+        //         u16 byte = col + row * 32;
+        //         u8 fetched = PPUMemory::read(0x2000 + byte);
+        //         u16 offset = CTRL::B ? 0x1000 : 0x0;
                 
-                u16 attrib_idx = (col / 4) + (row / 4) * 8;
-                u8 attrib = PPUMemory::read(0x23C0 + attrib_idx);
+        //         u16 attrib_idx = (col / 4) + (row / 4) * 8;
+        //         u8 attrib = PPUMemory::read(0x23C0 + attrib_idx);
 
-                u8 palette = (attrib >> Palette::get_shift(row, col)) & 0b11;
+        //         u8 palette = (attrib >> Palette::get_shift(row, col)) & 0b11;
 
-                for (u8 drow = 0; drow < 8; drow++)
-                {
-                    u8 first = PPUMemory::read(offset + 16 * fetched + drow);
-                    u8 second = PPUMemory::read(offset + 16 * fetched + drow + 8);
-                    for (u8 z = 0; z < 8; z++)
-                    {
-                        u8 pixel = 2 * ((second >> z) & 1) + ((first >> z) & 1);
-                        u32 rgbcolor;
-                        if (pixel > 0) rgbcolor = PaletteData::data[Palette::read(
-                                    4 * palette + pixel
-                                )];
-                        else rgbcolor = PaletteData::data[Palette::read(0)];
+        //         for (u8 drow = 0; drow < 8; drow++)
+        //         {
+        //             u8 first = PPUMemory::read(offset + 16 * fetched + drow);
+        //             u8 second = PPUMemory::read(offset + 16 * fetched + drow + 8);
+        //             for (u8 z = 0; z < 8; z++)
+        //             {
+        //                 u8 pixel = 2 * ((second >> z) & 1) + ((first >> z) & 1);
+        //                 u32 rgbcolor;
+        //                 if (pixel > 0) rgbcolor = PaletteData::data[Palette::read(
+        //                             4 * palette + pixel
+        //                         )];
+        //                 else rgbcolor = PaletteData::data[Palette::read(0)];
 
-                        Display::writePixel(col * 8 + 7 - z, row * 8 + drow, rgbcolor);
-                    }
+        //                 Display::writePixel(col * 8 + 7 - z, row * 8 + drow, rgbcolor);
+        //             }
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
-        for (u32 oam_idx = 64 - 1; oam_idx--;)
-        {
-            u8 y_pos = OAM::data[4 * oam_idx + 0];
-            u8 index_no = OAM::data[4 * oam_idx + 1] % 0x100;
-            u8 attrib = OAM::data[4 * oam_idx + 2];
-            u8 x_pos = OAM::data[4 * oam_idx + 3];
+        // for (u32 oam_idx = 64 - 1; oam_idx--;)
+        // {
+        //     u8 y_pos = OAM::data[4 * oam_idx + 0];
+        //     u8 index_no = OAM::data[4 * oam_idx + 1] % 0x100;
+        //     u8 attrib = OAM::data[4 * oam_idx + 2];
+        //     u8 x_pos = OAM::data[4 * oam_idx + 3];
 
-            u8 palette = attrib & 0b11;
-            bool behind_bg = BIT_TEST(attrib, 5);
-            bool flip_horiz = BIT_TEST(attrib, 6);
-            bool flip_vert = BIT_TEST(attrib, 7);
+        //     u8 palette = attrib & 0b11;
+        //     bool behind_bg = get_bit(attrib, 5);
+        //     bool flip_horiz = get_bit(attrib, 6);
+        //     bool flip_vert = get_bit(attrib, 7);
 
             
-            u16 pattern_tab_idx = (CTRL::S ? 0x1000 : 0x0) + 16 * index_no;
+        //     u16 pattern_tab_idx = (CTRL::S ? 0x1000 : 0x0) + 16 * index_no;
 
-            for (u32 row = 0; row < 8; row++)
-            {
-                u8 first = PPUMemory::read(pattern_tab_idx + row);
-                u8 second = PPUMemory::read(pattern_tab_idx + row + 8);
+        //     for (u32 row = 0; row < 8; row++)
+        //     {
+        //         u8 first = PPUMemory::read(pattern_tab_idx + row);
+        //         u8 second = PPUMemory::read(pattern_tab_idx + row + 8);
 
-                for (u32 col = 0; col < 8; col++)
-                {
-                    u32 pixel_row = y_pos + (flip_vert ? 7 - row : row);
-                    u32 pixel_col = x_pos + (flip_horiz ? col : 7 - col);
-                    if (pixel_row < 240 && pixel_col < 256)
-                    {
-                        u8 pixel = 2 * BIT_TEST(second, col) + BIT_TEST(first, col);
-                        if (pixel > 0)
-                        {
-                            u32 rgbcolor = PaletteData::data[
-                                Palette::read(4 * (palette + 4) + pixel)
-                            ];
-                            // printf("Writing to pixel (%d, %d)...\n", pixel_col, pixel_row);
-                            Display::writePixel(pixel_col, pixel_row, rgbcolor);
-                        }
-                    }
-                }
-            }
-        }
+        //         for (u32 col = 0; col < 8; col++)
+        //         {
+        //             u32 pixel_row = y_pos + (flip_vert ? 7 - row : row);
+        //             u32 pixel_col = x_pos + (flip_horiz ? col : 7 - col);
+        //             if (pixel_row < 240 && pixel_col < 256)
+        //             {
+        //                 u8 pixel = 2 * get_bit(second, col) + get_bit(first, col);
+        //                 if (pixel > 0)
+        //                 {
+        //                     u32 rgbcolor = PaletteData::data[
+        //                         Palette::read(4 * (palette + 4) + pixel)
+        //                     ];
+        //                     // printf("Writing to pixel (%d, %d)...\n", pixel_col, pixel_row);
+        //                     Display::writePixel(pixel_col, pixel_row, rgbcolor);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         Display::flip();
 
@@ -479,6 +549,33 @@ namespace PPU
         if (CTRL::V)
         {
             CPU::trigger_nmi();
+        }
+    }
+
+    void draw_row()
+    {
+        u8 row = scan_line;
+        assert(row < 240);
+
+        for (u32 col = 0; col < 256; col++)
+        {
+            u16 nametable_index = col / 8 + (row / 8) * 32;
+            u8 fetched = PPUMemory::read(0x2000 + nametable_index);
+            u16 bg_offset = CTRL::B ? 0x1000 : 0;
+            u8 first  = PPUUtils::reverse_byte(PPUMemory::read(bg_offset + 16 * fetched + (row % 8)));
+            u8 second = PPUUtils::reverse_byte(PPUMemory::read(bg_offset + 16 * fetched + (row % 8) + 8));
+            u8 pixel = 2 * get_bit(second, col % 8) + get_bit(first, col % 8);
+            u16 attrib_idx = (col / 32) + (row / 32) * 8;
+            u8 attrib = PPUMemory::read(0x23C0 + attrib_idx);
+            u8 palette = (attrib >> Palette::get_shift(row / 8, col / 8)) & 0b11;
+
+            u32 rgbcolor;
+            if (pixel > 0)
+                rgbcolor = PaletteData::data[Palette::read(4 * palette + pixel)];
+            else
+                rgbcolor = PaletteData::data[Palette::read(0)];
+            
+            Display::writePixel(col, row, rgbcolor);
         }
     }
 
@@ -492,6 +589,13 @@ namespace PPU
             dot = 0;
             scan_line++;
         }
+        if (scan_line == NUM_SCAN_LINES)
+        {
+            scan_line = 0;
+            frame_count++;
+        }
+
+        /* Rendering logic goes here */
 
         if (scan_line == NUM_SCAN_LINES - 1 && dot == 1)
         {
@@ -502,10 +606,11 @@ namespace PPU
             STATUS::V = true;
             vertical_blank();
         }
-        else if (scan_line == NUM_SCAN_LINES)
+
+        if (dot == 257 && scan_line < 240)
         {
-            scan_line = 0;
-            frame_count++;
+            draw_row();
+            evaluate_sprites();
         }
     }
 
