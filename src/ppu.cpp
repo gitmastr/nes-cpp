@@ -433,6 +433,46 @@ namespace PPU
             }
         }
 
+        for (u32 oam_idx = 64 - 1; oam_idx--;)
+        {
+            u8 y_pos = OAM::data[4 * oam_idx + 0];
+            u8 index_no = OAM::data[4 * oam_idx + 1] % 0x100;
+            u8 attrib = OAM::data[4 * oam_idx + 2];
+            u8 x_pos = OAM::data[4 * oam_idx + 3];
+
+            u8 palette = attrib & 0b11;
+            bool behind_bg = BIT_TEST(attrib, 5);
+            bool flip_horiz = BIT_TEST(attrib, 6);
+            bool flip_vert = BIT_TEST(attrib, 7);
+
+            
+            u16 pattern_tab_idx = (CTRL::S ? 0x1000 : 0x0) + 16 * index_no;
+
+            for (u32 row = 0; row < 8; row++)
+            {
+                u8 first = PPUMemory::read(pattern_tab_idx + row);
+                u8 second = PPUMemory::read(pattern_tab_idx + row + 8);
+
+                for (u32 col = 0; col < 8; col++)
+                {
+                    u32 pixel_row = y_pos + (flip_vert ? 7 - row : row);
+                    u32 pixel_col = x_pos + (flip_horiz ? col : 7 - col);
+                    if (pixel_row < 240 && pixel_col < 256)
+                    {
+                        u8 pixel = 2 * BIT_TEST(second, col) + BIT_TEST(first, col);
+                        if (pixel > 0)
+                        {
+                            u32 rgbcolor = PaletteData::data[
+                                Palette::read(4 * (palette + 4) + pixel)
+                            ];
+                            // printf("Writing to pixel (%d, %d)...\n", pixel_col, pixel_row);
+                            Display::writePixel(pixel_col, pixel_row, rgbcolor);
+                        }
+                    }
+                }
+            }
+        }
+
         Display::flip();
 
 
