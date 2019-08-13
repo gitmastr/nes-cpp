@@ -371,11 +371,13 @@ namespace PPU
         struct SpritePixel
         {
             u32 rgb;
-            bool sprite_behind_bg;
             bool is_opaque;
+            bool sprite_behind_bg;
+            u8 sprite_index;
 
-            SpritePixel(u32 rgb, bool is_opaque, bool sprite_behind_bg) :
-                rgb(rgb), is_opaque(is_opaque), sprite_behind_bg(sprite_behind_bg)
+            SpritePixel(u32 rgb, bool is_opaque, bool sprite_behind_bg, u8 sprite_index) :
+                rgb(rgb), is_opaque(is_opaque), sprite_behind_bg(sprite_behind_bg),
+                sprite_index(sprite_index)
             {
             }
         };
@@ -384,26 +386,32 @@ namespace PPU
         {
             for (u32 i = 0; i < 8; i++)
             {
-                u8 x = counters[i];
+                u32 x = counters[i];
                 u8 attrib = latches[i];
                 u8 palette = attrib & 0b11;
                 bool flip_horiz = get_bit(attrib, 6);
                 bool flip_vert = get_bit(attrib, 7);
+                (void) flip_vert;
                 bool priority = get_bit(attrib, 5);
-                u8 bit_index = cx - x;
+                u32 bit_index = flip_horiz ? cx - x : (7 + x) - cx;
                 if (x <= cx && cx < x + 8) // hit
                 {
-                    u8 pixel = (2 * get_bit(shift_reg_2[i], bit_index))  | 
-                                    get_bit(shift_reg_1[i], bit_index);
-                    if (pixel > 0)
+                    u8 pixel = (get_bit(shift_reg_2[i], bit_index) << 1)  + get_bit(shift_reg_1[i], bit_index);
+                    if (pixel)
                     {
-                        u32 rgb = PaletteData::data[Palette::read(4 * (palette + 4) + pixel)];
-                        return SpritePixel(rgb, true, priority);
+                        // u32 rgb = 0;
+                        // switch (pixel)
+                        // {
+                        //     case 1: rgb = 0x333333; break;
+                        //     case 2: rgb = 0x888888; break;
+                        //     case 3: rgb = 0XAAAAAA; break;
+                        // }
+                        return SpritePixel(Palette::read_rgb(4 * (palette + 4) + pixel), true, priority, i);
                     }
                 }
             }
 
-            return SpritePixel(0, false, false);
+            return SpritePixel(0, false, false, 0);
         }
 
         u8 read_address()
@@ -462,7 +470,7 @@ namespace PPU
         {
             if (sec_idx < 8)
             {
-                u8 y = OAM::data[4 * n];
+                u32 y = OAM::data[4 * n];
                 if (y <= scan_line && scan_line < y + 8) // sprite hit
                 {
                     for (u32 c = 0; c < 4; c++) OAM::secondary_data[4 * sec_idx + c] = OAM::data[4 * n + c];
@@ -616,7 +624,7 @@ namespace PPU
             
             OAM::SpritePixel sp = OAM::evaluate_row_pixel(col);
             bool sprite_opaque = sp.is_opaque;
-            bool rgb_sprite = sp.rgb;
+            u32 rgb_sprite = sp.rgb;
             bool sprite_behind_bg = sp.sprite_behind_bg;
 
             switch ((bg_opaque << 2) | (sprite_opaque << 1) | sprite_behind_bg)
