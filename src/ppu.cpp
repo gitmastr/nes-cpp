@@ -316,6 +316,48 @@ namespace PPU
         }
     }
 
+    namespace Palette 
+    {
+        array<u8, 32> data;
+
+        u8 get_shift(u8 row, u8 col)
+        {
+
+            // bottom right, top right, bottom left, top left
+            const u8 shifts[] = { 6, 2, 4, 0 };
+            //                left               top
+            return shifts[(col % 4 < 2) << 1 | (row % 4 < 2)];
+        }
+
+        u16 mirror(u16 address)
+        {
+            // Addresses $3F10/$3F14/$3F18/$3F1C are 
+            // mirrors of $3F00/$3F04/$3F08/$3F0C.
+            if (address > 16 && address % 4 == 0)
+                address -= 16;
+            return address;
+        }
+
+        u8 read(u16 address)
+        {
+            u8 res = data[mirror(address)];
+            if (VERBOSE) printf("[PALETTE] Read value 0x%X from palette\n", res);
+
+            return res;
+        }
+
+        void write(u16 address, u8 value)
+        {
+            data[mirror(address)] = value;
+            if (VERBOSE) printf("[PALETTE] Wrote value 0x%X to palette\n", value);
+        }
+
+        u32 read_rgb(u16 address)
+        {
+            return PaletteData::data[read(address)];
+        }
+    }
+
     namespace OAM 
     {
         vector<u8> data(256);
@@ -325,6 +367,44 @@ namespace PPU
         vector<u8> latches(8);
         vector<u8> counters(8);
         u8 address;
+
+        struct SpritePixel
+        {
+            u32 rgb;
+            bool sprite_behind_bg;
+            bool is_opaque;
+
+            SpritePixel(u32 rgb, bool is_opaque, bool sprite_behind_bg) :
+                rgb(rgb), is_opaque(is_opaque), sprite_behind_bg(sprite_behind_bg)
+            {
+            }
+        };
+
+        SpritePixel evaluate_row_pixel(u32 cx)
+        {
+            for (u32 i = 0; i < 8; i++)
+            {
+                u8 x = counters[i];
+                u8 attrib = latches[i];
+                u8 palette = attrib & 0b11;
+                bool flip_horiz = get_bit(attrib, 6);
+                bool flip_vert = get_bit(attrib, 7);
+                bool priority = get_bit(attrib, 5);
+                u8 bit_index = cx - x;
+                if (x <= cx && cx < x + 8) // hit
+                {
+                    u8 pixel = (2 * get_bit(shift_reg_2[i], bit_index))  | 
+                                    get_bit(shift_reg_1[i], bit_index);
+                    if (pixel > 0)
+                    {
+                        u32 rgb = PaletteData::data[Palette::read(4 * (palette + 4) + pixel)];
+                        return SpritePixel(rgb, true, priority);
+                    }
+                }
+            }
+
+            return SpritePixel(0, false, false);
+        }
 
         u8 read_address()
         {
@@ -370,49 +450,11 @@ namespace PPU
         }
     }
 
-    namespace Palette 
-    {
-        array<u8, 32> data;
-
-        u8 get_shift(u8 row, u8 col)
-        {
-
-            // bottom right, top right, bottom left, top left
-            const u8 shifts[] = { 6, 2, 4, 0 };
-            //                left               top
-            return shifts[(col % 4 < 2) << 1 | (row % 4 < 2)];
-        }
-
-        u16 mirror(u16 address)
-        {
-            // Addresses $3F10/$3F14/$3F18/$3F1C are 
-            // mirrors of $3F00/$3F04/$3F08/$3F0C.
-            if (address > 16 && address % 4 == 0)
-                address -= 16;
-            return address;
-        }
-
-        u8 read(u16 address)
-        {
-            u8 res = data[mirror(address)];
-            if (VERBOSE) printf("[PALETTE] Read value 0x%X from palette\n", res);
-
-            return res;
-        }
-
-        void write(u16 address, u8 value)
-        {
-            data[mirror(address)] = value;
-            if (VERBOSE) printf("[PALETTE] Wrote value 0x%X to palette\n", value);
-
-        }
-    }
-
     void evaluate_sprites()
     {
         assert(dot == 257);
 
-        for (u32 i = 0; i < 32; i++) OAM::secondary_data[i] = 0xFF;
+        std::fill(OAM::secondary_data.begin(), OAM::secondary_data.end(), 0xFF);
 
         u32 sec_idx = 0;
         u32 m = 0;
@@ -421,17 +463,16 @@ namespace PPU
             if (sec_idx < 8)
             {
                 u8 y = OAM::data[4 * n];
-                if (y <= scan_line < y + 8) // sprite hit
+                if (y <= scan_line && scan_line < y + 8) // sprite hit
                 {
-                    for (u32 cpy = 1; cpy < 4; cpy++)
-                        OAM::secondary_data[4 * sec_idx + cpy] = OAM::data[4 * n + cpy];
+                    for (u32 c = 0; c < 4; c++) OAM::secondary_data[4 * sec_idx + c] = OAM::data[4 * n + c];
                     sec_idx++;
                 }
             }
             else
             {
-                u8 y = OAM::data[4 * n + m];
-                if (y <= scan_line < y + 8) // if in range
+                u32 y = OAM::data[4 * n + m];
+                if (y <= scan_line && scan_line < y + 8) // if in range
                 {
                     STATUS::O = true; // set sprite overflow
                     m = 0;
@@ -445,27 +486,24 @@ namespace PPU
 
         for (u32 i = 0; i < 8; i++)
         {
-            if (true || i < sec_idx)
+            if (i < sec_idx)
             {
-                u8 attrib = OAM::secondary_data[4 * i + 2];
                 u8 x = OAM::secondary_data[4 * i + 3];
-                u8 y = OAM::secondary_data[4 * i + 0];
-                bool behind_bg = get_bit(attrib, 5);
-                bool flip_horiz = get_bit(attrib, 6);
-                bool flip_vert = get_bit(attrib, 7);
-                OAM::latches[i] = attrib;
+                u8 y = OAM::secondary_data[4 * i];
+                OAM::latches[i] = OAM::secondary_data[4 * i + 2];
                 OAM::counters[i] = x;
-                u16 offset = (CTRL::B ? 0x1000 : 0x0) + 16 * (attrib % 0x100) + (flip_vert ? y : 7 - y);
-                OAM::shift_reg_1[i] = PPUMemory::read(offset);
-                OAM::shift_reg_2[i] = PPUMemory::read(offset + 8);
+                u16 lower_addr = (CTRL::S ? 0x1000 : 0) + 16 * OAM::secondary_data[4 * i + 1] + (scan_line - y);
+                OAM::shift_reg_1[i] = PPUMemory::read(lower_addr);
+                OAM::shift_reg_2[i] = PPUMemory::read(lower_addr + 8);
             }
             else 
             {
-                
+                OAM::latches[i] = 0xFF;
+                OAM::counters[i] = 0xFF;
+                OAM::shift_reg_1[i] = 0xFF;
+                OAM::shift_reg_2[i] = 0xFF;
             }
         }
-
-
     }
 
     void vertical_blank()
@@ -569,13 +607,29 @@ namespace PPU
             u8 attrib = PPUMemory::read(0x23C0 + attrib_idx);
             u8 palette = (attrib >> Palette::get_shift(row / 8, col / 8)) & 0b11;
 
-            u32 rgbcolor;
-            if (pixel > 0)
-                rgbcolor = PaletteData::data[Palette::read(4 * palette + pixel)];
+            u32 rgb_bg;
+            bool bg_opaque = pixel > 0;
+            if (bg_opaque)
+                rgb_bg = PaletteData::data[Palette::read(4 * palette + pixel)];
             else
-                rgbcolor = PaletteData::data[Palette::read(0)];
+                rgb_bg = PaletteData::data[Palette::read(0)];
             
-            Display::writePixel(col, row, rgbcolor);
+            OAM::SpritePixel sp = OAM::evaluate_row_pixel(col);
+            bool sprite_opaque = sp.is_opaque;
+            bool rgb_sprite = sp.rgb;
+            bool sprite_behind_bg = sp.sprite_behind_bg;
+
+            switch ((bg_opaque << 2) | (sprite_opaque << 1) | sprite_behind_bg)
+            {
+                case 0b000: Display::writePixel(col, row, rgb_bg); break;
+                case 0b001: Display::writePixel(col, row, rgb_bg); break;
+                case 0b010: Display::writePixel(col, row, rgb_sprite); break;
+                case 0b011: Display::writePixel(col, row, rgb_sprite); break;
+                case 0b100: Display::writePixel(col, row, rgb_bg); break;
+                case 0b101: Display::writePixel(col, row, rgb_bg); break;
+                case 0b110: Display::writePixel(col, row, rgb_sprite); break;
+                case 0b111: Display::writePixel(col, row, rgb_bg); break;
+            }
         }
     }
 
