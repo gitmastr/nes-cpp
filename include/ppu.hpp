@@ -42,6 +42,7 @@ namespace PPU
     {
         extern vector<u8> data;
         extern vector<u8> secondary_data;
+        void print_secondary_oam();
     }
 
     namespace Palette

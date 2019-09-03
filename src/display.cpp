@@ -1,28 +1,28 @@
 #include "display.hpp"
+#include "config.hpp"
+#include "crc.hpp"
 #include <algorithm>
 #include "SDL2/SDL.h"
 
-const u32 DISPLAY_WIDTH = 256;
+const u32 DISPLAY_WIDTH = 256;  // do not change
 const u32 DISPLAY_HEIGHT = 240;
-const string WINDOW_NAME = "NES";
-const u32 SCREEN_SIZE_MULTIPLIER = 2;
 
 constexpr u32 rgb_to_u32(u8 r, u8 g, u8 b)
 {
     return (r << 16) | (g << 8) | (b << 0);
 }
 
-const u8 get_r(u32 rgb)
+constexpr u8 get_r(u32 rgb)
 {
     return (rgb >> 16) & 0xFF;
 }
 
-const u8 get_g(u32 rgb)
+constexpr u8 get_g(u32 rgb)
 {
     return (rgb >> 8) & 0xFF;
 }
 
-const u8 get_b(u32 rgb)
+constexpr u8 get_b(u32 rgb)
 {
     return (rgb >> 0) & 0xFF;
 }
@@ -34,7 +34,7 @@ constexpr u32 index(u32 u, u32 v)
 
 namespace Display
 {
-    array<u32, DISPLAY_WIDTH * DISPLAY_HEIGHT> buffer;
+    vector<u32> buffer(DISPLAY_WIDTH * DISPLAY_HEIGHT);
     SDL_Window *window;
     SDL_Texture *texture;
     SDL_Renderer *renderer;
@@ -73,16 +73,21 @@ namespace Display
         SDL_RenderPresent(renderer);
     }
 
+    u32 get_buffer_hash()
+    {
+        return crc32(buffer);
+    }
+
     bool init()
     {
         if (SDL_Init(SDL_INIT_VIDEO) < 0)
             throw std::runtime_error("SDL2 init fail");
         
         window = SDL_CreateWindow(
-            WINDOW_NAME.c_str(),
+            Config::WINDOW_NAME.c_str(),
             SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-            DISPLAY_WIDTH * SCREEN_SIZE_MULTIPLIER,
-            DISPLAY_HEIGHT * SCREEN_SIZE_MULTIPLIER,
+            DISPLAY_WIDTH * Config::SCREEN_SIZE_MULTIPLIER,
+            DISPLAY_HEIGHT * Config::SCREEN_SIZE_MULTIPLIER,
             SDL_WINDOW_SHOWN
         );
 

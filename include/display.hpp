@@ -15,4 +15,5 @@ namespace Display
     void buffer_to_file(const string &file_name);
     bool init();
     void deinit();
+    u32 get_buffer_hash();
 }

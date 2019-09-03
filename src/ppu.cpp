@@ -7,8 +7,8 @@
 #include "palettedata.hpp"
 #include "ppuutils.hpp"
 #include <exception>
-#include <map>
 #include <cassert>
+#include <algorithm>
 
 const u32 SCREEN_WIDTH = 256;
 const u32 SCREEN_HEIGHT = 240;
@@ -84,7 +84,6 @@ namespace PPU
     u32 scan_line; // ranges from 0 - NUM_DOTS
     u32 dot; // ranges from 0 - NUM_DOTS
     u64 frame_count; // number of frames outputted
-
 
     namespace ADDR
     {
@@ -281,9 +280,20 @@ namespace PPU
 
     namespace DATA
     {
+        u8 buffer = 0; // for reads of $2007 PPUDATA
+
         u8 read()
         {
             u8 res = PPUMemory::read(ADDR::vram_address);
+            if (ADDR::vram_address % 0x4000 < 0x3F00)
+            {
+                std::swap(res, buffer);
+            }
+            else 
+            {
+                buffer = PPUMemory::read(ADDR::vram_address - 0x1000);
+            }
+
             ADDR::vram_address += (CTRL::I) ? 32 : 1;
             if (VERBOSE) printf("[DATA] Read value 0x%X to PPUDATA\n", res);
             return res;
@@ -318,7 +328,14 @@ namespace PPU
 
     namespace Palette 
     {
-        array<u8, 32> data;
+        array<u8, 32> data { 0x09,0x01,0x00,0x01,
+                             0x00,0x02,0x02,0x0D,
+                             0x08,0x10,0x08,0x24,
+                             0x00,0x00,0x04,0x2C,
+                             0x09,0x01,0x34,0x03,
+                             0x00,0x04,0x00,0x14,
+                             0x08,0x3A,0x00,0x02,
+                             0x00,0x20,0x2C,0x08 };
 
         u8 get_shift(u8 row, u8 col)
         {
@@ -333,9 +350,9 @@ namespace PPU
         {
             // Addresses $3F10/$3F14/$3F18/$3F1C are 
             // mirrors of $3F00/$3F04/$3F08/$3F0C.
-            if (address > 16 && address % 4 == 0)
-                address -= 16;
-            return address;
+            return (address >= 16 && address % 4 == 0) ?
+                address - 16 :
+                address;
         }
 
         u8 read(u16 address)
@@ -382,19 +399,20 @@ namespace PPU
 
         SpritePixel evaluate_row_pixel(u32 cx)
         {
-            for (u32 i = 0; i < 8; i++)
+            for (u8 i = 0; i < 8; i++)
             {
-                u8 x = counters[i];
+                u32 x = counters[i];
                 u8 attrib = latches[i];
                 u8 palette = attrib & 0b11;
                 bool flip_horiz = get_bit(attrib, 6);
                 bool flip_vert = get_bit(attrib, 7);
                 bool priority = get_bit(attrib, 5);
-                u8 bit_index = cx - x;
+                u8 bit_index = flip_horiz ? cx - x : 7 + x - cx;
                 if (x <= cx && cx < x + 8) // hit
                 {
                     u8 pixel = (2 * get_bit(shift_reg_2[i], bit_index))  | 
                                     get_bit(shift_reg_1[i], bit_index);
+                    // if (cx == 255) printf("Hit pixel on last column\n");
                     if (pixel > 0)
                     {
                         u32 rgb = PaletteData::data[Palette::read(4 * (palette + 4) + pixel)];
@@ -448,6 +466,19 @@ namespace PPU
             if (VERBOSE) printf("[OAM] OAM DMA complete\n");
 
         }
+
+        void print_secondary_oam()
+        {
+            for (auto dat = secondary_data.begin(); dat < secondary_data.end(); dat += 4)
+            {
+                auto Y = *dat;
+                auto index = *(dat + 1);
+                auto attrib = *(dat + 2);
+                auto X = *(dat + 3);
+                printf("%ld. (%d, %d, %02X, %d)\n", 
+                    (dat - secondary_data.begin()) / 4, Y, index, attrib, X);
+            }
+        }
     }
 
     void evaluate_sprites()
@@ -479,9 +510,10 @@ namespace PPU
                 }
                 else
                 {
-                    m += 1;
+                    m = (m + 1) % 4;
                 }
             }
+
         }
 
         for (u32 i = 0; i < 8; i++)
@@ -500,10 +532,11 @@ namespace PPU
             {
                 OAM::latches[i] = 0xFF;
                 OAM::counters[i] = 0xFF;
-                OAM::shift_reg_1[i] = 0xFF;
-                OAM::shift_reg_2[i] = 0xFF;
+                OAM::shift_reg_1[i] = 0x00;
+                OAM::shift_reg_2[i] = 0x00;
             }
         }
+        // OAM::print_secondary_oam();
     }
 
     void vertical_blank()
@@ -616,7 +649,7 @@ namespace PPU
             
             OAM::SpritePixel sp = OAM::evaluate_row_pixel(col);
             bool sprite_opaque = sp.is_opaque;
-            bool rgb_sprite = sp.rgb;
+            u32 rgb_sprite = sp.rgb;
             bool sprite_behind_bg = sp.sprite_behind_bg;
 
             switch ((bg_opaque << 2) | (sprite_opaque << 1) | sprite_behind_bg)

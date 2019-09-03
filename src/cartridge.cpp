@@ -1,6 +1,8 @@
 #include <iterator>
 #include <fstream>
 #include <cstdio>
+#include <algorithm>
+#include <cassert>
 #include "cartridge.hpp"
 
 namespace Cartridge
@@ -56,11 +58,19 @@ namespace Cartridge
         battery = (control1 >> 1) & 1;
 
         size_t prgSize = 16384 * numPRG;
-        size_t chrSize = 8192 * std::max<u64>(numCHR, 1);
+        size_t chrSize = 8192 * std::max<size_t>(1, numCHR);
 
         size_t loc = (trainer ? 528 : 16);
 
+        assert(loc == 16);
+
         prg = vector<u8>(buf.begin() + loc, buf.begin() + loc + prgSize);
-        chr = vector<u8>(buf.begin() + loc + prgSize, buf.begin() + loc + prgSize + chrSize);
+        if (numCHR) chr = vector<u8>(buf.begin() + loc + prgSize, buf.begin() + loc + prgSize + chrSize);
+        else
+        {
+            chr = vector<u8>(chrSize);
+            std::fill(chr.begin(), chr.end(), 0);
+        }
     }
+
 }

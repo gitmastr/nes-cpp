@@ -8,11 +8,11 @@
 #include "display.hpp"
 #include "input.hpp"
 #include "SDL2/SDL.h"
+#include "config.hpp"
 #include <chrono>
 #include <exception>
 #include <thread>
 
-const double FRAMERATE = 60.0988;
 const u64 MAX_FRAME_JUMP = 2;
 const u64 DESYNC_MAX_WRAPAROUND = 10; 
     // if we're behind by more frames than this
@@ -47,7 +47,7 @@ namespace Console
             std::chrono::duration<double> diff = current_time - program_start;
             std::chrono::duration<double> since_last_print = current_time - last_print;
             double seconds_passed = diff.count();
-            u64 frame_render_target = static_cast<u64>(seconds_passed * FRAMERATE) 
+            u64 frame_render_target = static_cast<u64>(seconds_passed * Config::FRAMERATE) 
                                                         - frame_count_offset;
             if (PPU::frame_count > frame_render_target)
                 throw std::runtime_error("game clock ahead of system clock");

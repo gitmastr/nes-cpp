@@ -17,6 +17,12 @@ Mapper::~Mapper()
 std::unique_ptr<Mapper> Mapper::generateMapper()
 {
     assert(Cartridge::mapper == 0);
+    switch (Cartridge::mapper)
+    {
+        case 0: return std::make_unique<Mapper2>();
+        case 2: return std::make_unique<Mapper2>();
+        default: throw "unknown mapper";
+    }
     return std::make_unique<Mapper2>();
 }
 

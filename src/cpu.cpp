@@ -15,12 +15,12 @@ namespace CPUMemory
         else if (addr  < 0x4000) return PPU::read_register(0x2000 + addr % 8); /* PPU */
         else if (addr == 0x4014) return PPU::read_register(addr); /* PPU */
         else if (addr == 0x4015) return 0; /* APU */
-        else if (addr == 0x4016) return Input::Controller::read();
-        else if (addr == 0x4017) return 0; /* Controller2 */
+        else if (addr == 0x4016) return Input::controller1.read();
+        else if (addr == 0x4017) return Input::controller2.read(); /* Controller2 */
         else if (addr  < 0x6000) return 0; /* IO Registers? */
         else if (addr >= 0x6000) return Console::mapper->read(addr);
 
-        throw "invalid read";
+        throw "CPU attempted read from unknown address";
         return 0;
     }
 
@@ -31,9 +31,15 @@ namespace CPUMemory
         else if (addr  < 0x4014) return; /* APU */
         else if (addr == 0x4014) PPU::write_register(0x4014, value);
         else if (addr == 0x4015) return; /* APU */
-        else if (addr == 0x4016) Input::Controller::write(value);
+        else if (addr == 0x4016) 
+        {
+                                 Input::controller1.write(value);
+                                 Input::controller2.write(value);
+        }
+        // else if (addr == 0x4017) Input::controller2.write(value);
         else if (addr  < 0x6000) return; /* IO or something */
         else if (addr >= 0x6000) Console::mapper->write(addr, value);
+        else throw "CPU attempted write to unknown address";
     }
 }
 
