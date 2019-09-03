@@ -1,3 +1,1 @@
-
-
-class 
+#include "autotest.hpp"
