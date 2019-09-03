@@ -4,6 +4,7 @@
 class Autotest
 {
 private:
-    string filename;
-
+    const string filename;
+    const u32 success_display_hash;
+    
 };
