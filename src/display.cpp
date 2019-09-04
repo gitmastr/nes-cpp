@@ -71,6 +71,10 @@ namespace Display
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);
+        if (Config::PRINT_FRAME_HASH)
+        {
+            printf("Current frame hash: %08X\n", get_buffer_hash());
+        }
     }
 
     u32 get_buffer_hash()

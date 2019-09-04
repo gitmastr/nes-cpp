@@ -8,11 +8,11 @@ SRC = $(wildcard $(SRC_DIR)/*.cpp)
 HDR = $(wildcard $(INCLUDE_DIR)/*.hpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 CPPFLAGS += -std=c++17 -Wall -I$(INCLUDE_DIR) -g3 -Og -D_GLIBCXX_DEBUG
-# CPPFLAGS += -std=c++17 -Wall -I$(INCLUDE_DIR) -O3 -flto
+# CPPFLAGS += -std=c++17 -Wall -I$(INCLUDE_DIR) -O3 -Os -flto
 LDFLAGS += -Llib
 LDLIBS += -lm -lSDL2main -lSDL2
 LDLIBSWIN += -lm -lmingw32 -lSDL2main -lSDL2
-CC = g++
+CXX = g++
 
 all: $(EXE)
 
@@ -26,16 +26,16 @@ time:
 	time ./$(EXE)
 
 $(EXE): $(OBJ)
-	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 windows: $(OBJ)
-	$(CC) $(LDFLAGS) $^ $(LDLIBSWIN) -o $(EXE).exe
+	$(CXX) $(LDFLAGS) $^ $(LDLIBSWIN) -o $(EXE).exe
 
 windows_run: windows
 	./$(EXE).exe roms/dk.nes
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(HDR)
-	$(CC) $(CPPFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) -c $< -o $@
 
 clean:
 	$(RM) $(OBJ) $(EXE)

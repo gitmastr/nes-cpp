@@ -3,8 +3,13 @@
 
 class Autotest
 {
+public:
+    Autotest(const string &testName,
+             const string &fileName,              
+             const u32 success_display_hash);
 private:
-    const string filename;
+    const string testName;
+    const string fileName;
     const u32 success_display_hash;
     
 };

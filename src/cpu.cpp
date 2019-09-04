@@ -82,7 +82,8 @@ namespace CPU
 
         if (stall >  0)
         {
-            stall--;
+            stall -= 1;
+            cycles += 1;
             return 1;
         }
 
@@ -197,7 +198,7 @@ namespace CPU
     
         printf("[CPU] %04X  %s %s %s  %s %27s A:%02X X:%02X Y:%02X P:%02X SP:%02X PPU:%3ld,%3ld V:%04X T:%04X\n",
             PC, w0, w1, w2, name, "", A, X, Y, 
-            flags(), SP, (cycles * 3) % 341, (3 * cycles) / 341,
+            flags(), SP, (cycles * 3) % 341, ((3 * cycles) / 341) % 261,
             PPU::ADDR::vram_address, PPU::ADDR::temp_vram_address);
     }
 

@@ -81,7 +81,7 @@ namespace PPU
     };
 
     bool latch;
-    u32 scan_line; // ranges from 0 - NUM_DOTS
+    u32 scan_line; // ranges from 0 - NUM_SCAN_LINE
     u32 dot; // ranges from 0 - NUM_DOTS
     u64 frame_count; // number of frames outputted
 
@@ -493,6 +493,8 @@ namespace PPU
     void evaluate_sprites()
     {
         assert(dot == 257);
+        assert(scan_line < 240 || scan_line == 261);
+        u8 row = scan_line < 240 ? scan_line : 0;
 
         std::fill(OAM::secondary_data.begin(), OAM::secondary_data.end(), 0xFF);
 
@@ -503,7 +505,7 @@ namespace PPU
             if (sec_idx < 8)
             {
                 u32 y = OAM::data[4 * n];
-                if (y <= scan_line && scan_line < y + 8) // sprite hit
+                if (y <= row && row < y + 8) // sprite hit
                 {
                     for (u32 c = 0; c < 4; c++) OAM::secondary_data[4 * sec_idx + c] = OAM::data[4 * n + c];
                     sec_idx++;
@@ -512,7 +514,7 @@ namespace PPU
             else
             {
                 u32 y = OAM::data[4 * n + m];
-                if (y <= scan_line && scan_line < y + 8) // if in range
+                if (y <= row && row < y + 8) // if in range
                 {
                     STATUS::O = true; // set sprite overflow
                     m = 0;
@@ -533,7 +535,7 @@ namespace PPU
                 u8 y = OAM::secondary_data[4 * i];
                 OAM::latches[i] = OAM::secondary_data[4 * i + 2];
                 OAM::counters[i] = x;
-                u16 lower_addr = (CTRL::S ? 0x1000 : 0) + 16 * OAM::secondary_data[4 * i + 1] + (scan_line - y);
+                u16 lower_addr = (CTRL::S ? 0x1000 : 0) + 16 * OAM::secondary_data[4 * i + 1] + (row - y);
                 OAM::shift_reg_1[i] = PPUMemory::read(lower_addr);
                 OAM::shift_reg_2[i] = PPUMemory::read(lower_addr + 8);
             }
@@ -675,12 +677,17 @@ namespace PPU
         }
     }
 
+    u64 vblank_start_cycle;
     void tick()
     {
-        // if (scan_line % 5 == 0 && dot == 0)
-        //     printf("Dot: %d, Scanline: %d\n", dot, scan_line);
-        dot++;
-        if (dot == NUM_DOTS)
+        dot += 1;
+        if (dot == NUM_DOTS || (
+
+                // odd frame rule
+                scan_line == NUM_SCAN_LINES - 1 && 
+                frame_count % 2 == 0 && 
+                dot == NUM_DOTS - 1
+        ))
         {
             dot = 0;
             scan_line++;
@@ -696,17 +703,23 @@ namespace PPU
         if (scan_line == NUM_SCAN_LINES - 1 && dot == 1)
         {
             STATUS::V = false;
+            auto vblank_end_cycle = CPU::cycles;
+            (void) vblank_end_cycle;
+            // printf("vblank_cpu_cycles: %ld\n", vblank_end_cycle - vblank_start_cycle);
         }
         else if (scan_line == 241 && dot == 1)
         {
             STATUS::V = true;
+            vblank_start_cycle = CPU::cycles;
             vertical_blank();
         }
 
-        if (dot == 257 && scan_line < 240)
+
+        if (dot == 257)
         {
-            draw_row();
-            evaluate_sprites();
+            if (scan_line < 240) draw_row();
+            if (scan_line < 239 || scan_line == NUM_SCAN_LINES - 1) 
+                                 evaluate_sprites();
         }
     }
 

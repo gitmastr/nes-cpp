@@ -101,12 +101,13 @@ namespace Console
 
     u32 step()
     {
-        // CPU::printInstruction();
+        if (Config::PRINT_INSTRUCTION) CPU::printInstruction();
         u32 cpu_cycles = CPU::step();
-        u32 to_run_ppu = 3 * cpu_cycles;
 
-        for (u32 i = 0; i < to_run_ppu; i++)
+        for (u32 i = 0; i < cpu_cycles; i++)
         {
+            PPU::tick();
+            PPU::tick();
             PPU::tick();
         }
 
